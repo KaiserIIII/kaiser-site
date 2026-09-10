@@ -19,7 +19,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start-site.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-site.ps1
 ```
 
-The site is available at `http://127.0.0.1:8080/`. The start script builds `dist/` when needed, records the project-owned Caddy PID under `.local/`, and writes logs under the same ignored directory.
+The site is available at `http://127.0.0.1:8080/`. Caddy listens on the loopback interface only. The start script builds `dist/` when needed, records the project-owned Caddy PID under `.local/`, and writes logs under the same ignored directory.
 
 Stop only this site's recorded process with:
 
@@ -54,3 +54,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start-site.ps1
 - If Caddy is missing, install it and reopen PowerShell.
 - If port `8080` is busy, inspect the owning process before changing the port; the tunnel and verification configuration must be updated together.
 - If the health check fails, inspect `.local/caddy-error.log` and validate the configuration with `caddy validate --config ops/Caddyfile --adapter caddyfile`.
+
+## Public tunnel
+
+The Cloudflare route example in `ops/cloudflared/config.example.yml` exposes only the site hostnames and points them to the loopback Caddy origin. Follow `ops/cloudflared/README.md` for validation and the confirmation gate before creating a real tunnel or DNS record. Never add the LangBot service to the public ingress.

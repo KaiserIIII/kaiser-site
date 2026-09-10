@@ -9,6 +9,7 @@ function Add-Failure([string]$Message) {
 
 $distIndex = Join-Path $repoRoot 'dist\index.html'
 $caddyfile = Join-Path $repoRoot 'ops\Caddyfile'
+$cloudflareExample = Join-Path $repoRoot 'ops\cloudflared\config.example.yml'
 
 if (-not (Test-Path -LiteralPath $distIndex -PathType Leaf)) {
     Add-Failure 'dist/index.html is missing. Run npm run build first.'
@@ -23,6 +24,34 @@ if (-not (Test-Path -LiteralPath $caddyfile -PathType Leaf)) {
     }
     if ($caddyConfig -notmatch '(?im)(file_server|respond\s+.*\s+404)') {
         Add-Failure 'Caddyfile must include a static file server and a 404 response boundary.'
+    }
+}
+
+if (-not (Test-Path -LiteralPath $cloudflareExample -PathType Leaf)) {
+    Add-Failure 'ops/cloudflared/config.example.yml is missing.'
+} else {
+    $cloudflareConfig = Get-Content -LiteralPath $cloudflareExample -Raw
+    if ($cloudflareConfig -notmatch '(?im)^ingress\s*:') {
+        Add-Failure 'Cloudflare example is missing its ingress section.'
+    }
+    if ($cloudflareConfig -notmatch '(?im)service\s*:\s*http_status:404\s*$') {
+        Add-Failure 'Cloudflare example must end with service: http_status:404.'
+    }
+
+    $hostnames = [regex]::Matches($cloudflareConfig, '(?im)^\s*-\s*hostname\s*:\s*(\S+)') | ForEach-Object { $_.Groups[1].Value }
+    foreach ($hostname in $hostnames) {
+        if ($hostname -match '(?i)(kb|api|admin|localhost)') {
+            Add-Failure "Cloudflare example contains a forbidden public hostname: $hostname."
+        }
+        if ($hostname -notin @('kaiseriii.me', 'www.kaiseriii.me', 'lab.kaiseriii.me')) {
+            Add-Failure "Cloudflare example contains an unapproved hostname: $hostname."
+        }
+    }
+    if ($hostnames.Count -ne 3) {
+        Add-Failure "Cloudflare example must contain exactly three approved hostnames; found $($hostnames.Count)."
+    }
+    if ($cloudflareConfig -match '(?im)service\s*:\s*(?!(?:http://127\.0\.0\.1:8080|http_status:404)\s*$)\S+') {
+        Add-Failure 'Cloudflare example contains a service outside the local Caddy origin.'
     }
 }
 

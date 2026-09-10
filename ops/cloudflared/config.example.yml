@@ -1,0 +1,13 @@
+# Copy this file to a private local config before replacing the placeholders.
+# Never commit the real tunnel ID or credentials file.
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: C:\Users\YOUR_WINDOWS_USER\.cloudflared\REPLACE_WITH_TUNNEL_UUID.json
+
+ingress:
+  - hostname: kaiseriii.me
+    service: http://127.0.0.1:8080
+  - hostname: www.kaiseriii.me
+    service: http://127.0.0.1:8080
+  - hostname: lab.kaiseriii.me
+    service: http://127.0.0.1:8080
+  - service: http_status:404
