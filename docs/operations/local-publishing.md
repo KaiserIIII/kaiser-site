@@ -60,3 +60,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start-site.ps1
 The Cloudflare route example in `ops/cloudflared/config.example.yml` exposes only the site hostnames and points them to the loopback Caddy origin. Follow `ops/cloudflared/README.md` for validation and the confirmation gate before creating a real tunnel or DNS record. Never add the LangBot service to the public ingress.
 
 Domain registration, DNS changes, and inbound forwarding are tracked separately in `docs/operations/domain-email-checklist.md`. The public alias is receive-only; the mailbox destination is entered manually and is never stored in this repository.
+
+## CI quality gates
+
+`.github/workflows/ci.yml` runs on pushes and pull requests. It installs from `package-lock.json`, audits public content, runs Astro/TypeScript checks, builds the static output, and runs the full test suite. It contains no deployment, tunnel, DNS, mailbox, or secret-handling step.
