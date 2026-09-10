@@ -22,6 +22,9 @@ if (-not (Test-Path -LiteralPath $caddyfile -PathType Leaf)) {
     if ($caddyConfig -match '(?im)(humanknow|knowledge|/kb|/api|:8000|localhost)') {
         Add-Failure 'Caddyfile contains a private knowledge-base or localhost route.'
     }
+    if ($caddyConfig -notmatch '(?im)^\s*bind\s+127\.0\.0\.1\s*$') {
+        Add-Failure 'Caddyfile must bind the origin to 127.0.0.1.'
+    }
     if ($caddyConfig -notmatch '(?im)(file_server|respond\s+.*\s+404)') {
         Add-Failure 'Caddyfile must include a static file server and a 404 response boundary.'
     }
