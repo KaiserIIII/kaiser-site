@@ -1,0 +1,14 @@
+---
+interface Props {
+  number: string;
+  label: string;
+}
+
+const { number, label } = Astro.props;
+---
+
+<div class="chapter-marker" aria-hidden="true">
+  <span>{number}</span>
+  <i></i>
+  <span>{label}</span>
+</div>
