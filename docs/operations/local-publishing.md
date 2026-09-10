@@ -64,3 +64,5 @@ Domain registration, DNS changes, and inbound forwarding are tracked separately 
 ## CI quality gates
 
 `.github/workflows/ci.yml` runs on pushes and pull requests. It installs from `package-lock.json`, audits public content, runs Astro/TypeScript checks, builds the static output, and runs the full test suite. It contains no deployment, tunnel, DNS, mailbox, or secret-handling step.
+
+See `docs/operations/backup-and-recovery.md` for private Tunnel credentials, source backup, and a safe recovery order. Use `docs/operations/public-release-checklist.md` to separate fresh local evidence from pending external account actions.
