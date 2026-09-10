@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 describe('built homepage', () => {
@@ -21,5 +21,14 @@ describe('built homepage', () => {
     expect(html).toContain('id="contact"');
     expect(html).toContain('Skip to content');
     expect(css).toContain('prefers-reduced-motion');
+  });
+
+  it('renders every public project detail route', () => {
+    const html = readFileSync('dist/index.html', 'utf8');
+    expect(html).toContain('03 / BUILDS');
+    expect(html).toContain('Personal Agent Knowledge Base');
+    for (const slug of ['personal-agent-knowledge-base', 'qldevicecheck', 'construction-cost-analyzer', 'cardcraft']) {
+      expect(existsSync(`dist/projects/${slug}/index.html`)).toBe(true);
+    }
   });
 });

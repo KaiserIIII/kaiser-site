@@ -1,0 +1,28 @@
+---
+import ChapterMarker from './ChapterMarker.astro';
+import { profile } from '../data/profile';
+---
+
+<section id="signals" class="chapter chapter--signals" aria-labelledby="signals-title">
+  <ChapterMarker number="04" label="SIGNALS" />
+  <div class="section-heading" data-reveal>
+    <h2 id="signals-title">Evidence over<br /><em>noise.</em></h2>
+    <p class="section-intro">
+      <span data-language-copy="zh">能力来自项目、迭代，以及可以被检查的工作。</span>
+      <span data-language-copy="en" hidden>Skills are the result of projects, iterations, and work that can be inspected.</span>
+    </p>
+  </div>
+  <div class="signal-grid">
+    {profile.focus.map((focus, index) => (
+      <div class="signal-card" data-reveal>
+        <span class="signal-card__index">0{index + 1}</span>
+        <strong>{focus}</strong>
+        <span class="signal-card__line"></span>
+      </div>
+    ))}
+  </div>
+  <div class="signal-footer" data-reveal>
+    <span>PUBLIC SOURCE</span>
+    <a href={profile.githubUrl} target="_blank" rel="noreferrer">github.com/{profile.github} ↗</a>
+  </div>
+</section>

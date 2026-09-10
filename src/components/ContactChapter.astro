@@ -1,0 +1,23 @@
+---
+import ChapterMarker from './ChapterMarker.astro';
+import { profile } from '../data/profile';
+---
+
+<section id="contact" class="chapter chapter--contact" aria-labelledby="contact-title">
+  <ChapterMarker number="05" label="CONTACT" />
+  <div class="contact-layout" data-reveal>
+    <div>
+      <h2 id="contact-title">Open a channel<br /><em>when the work is real.</em></h2>
+      <p class="section-intro">
+        <span data-language-copy="zh">合作机会、真实项目，或者一个值得讨论的技术问题。</span>
+        <span data-language-copy="en" hidden>For collaborations, opportunities, or a good technical question.</span>
+      </p>
+    </div>
+    <div class="contact-actions">
+      <a class="contact-email" href={`mailto:${profile.publicEmail}`}>{profile.publicEmail} <span>↗</span></a>
+      <button class="button button--text copy-email" type="button" data-copy-email={profile.publicEmail}>Copy email <span>+</span></button>
+      <p class="copy-feedback" data-copy-feedback aria-live="polite"></p>
+      <a class="contact-github" href={profile.githubUrl} target="_blank" rel="noreferrer">GitHub / {profile.github} ↗</a>
+    </div>
+  </div>
+</section>

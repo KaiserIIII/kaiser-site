@@ -1,60 +1,23 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import ChapterMarker from '../components/ChapterMarker.astro';
-import { profile } from '../data/profile';
+import HeroChapter from '../components/HeroChapter.astro';
+import JourneyChapter from '../components/JourneyChapter.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import SignalsChapter from '../components/SignalsChapter.astro';
+import ContactChapter from '../components/ContactChapter.astro';
 ---
 
-<SiteLayout title="KAISER / Yue Yu" description={profile.headline.en}>
+<SiteLayout title="KAISER / Yue Yu" description="Making complex ideas visible through working systems.">
   <div class="site-shell">
     <SiteHeader />
 
     <main id="profile" class="site-main">
-      <section class="chapter chapter--hero" aria-labelledby="hero-title">
-        <ChapterMarker number="01" label="PROFILE" />
-        <div class="hero-layout">
-          <div class="hero-copy">
-            <p class="eyebrow">PERSONAL SYSTEM / {new Date().getFullYear()}</p>
-            <h1 id="hero-title"><span>KAISER</span><em>Yue Yu</em></h1>
-            <p class="hero-lead" data-copy-zh={profile.headline.zh} data-copy-en={profile.headline.en}>{profile.headline.zh}</p>
-            <div class="hero-actions">
-              <a class="button button--primary" href="#builds">Explore the builds <span>↗</span></a>
-              <a class="button button--text" href="#contact">Open a channel <span>↘</span></a>
-            </div>
-          </div>
-          <div class="hero-signal" aria-label="Kaiser system status">
-            <div class="signal-ring signal-ring--outer"></div>
-            <div class="signal-ring signal-ring--inner"></div>
-            <div class="signal-core"><span>YU</span></div>
-            <div class="signal-readout"><span>STATUS</span><strong>BUILDING</strong><small>LOCAL / GLOBAL</small></div>
-          </div>
-        </div>
-        <div class="hero-footer"><span>SCROLL TO TRACE THE SYSTEM</span><span class="scroll-cue">↓</span><span>LOCAL / GLOBAL</span></div>
-      </section>
-
-      <section id="journey" class="chapter chapter--compact" aria-labelledby="journey-title">
-        <ChapterMarker number="02" label="JOURNEY" />
-        <h2 id="journey-title">From engineering context<br /><em>to software systems.</em></h2>
-        <p class="section-intro">A timeline of learning, field work, and the small decisions that turn curiosity into capability.</p>
-      </section>
-
-      <section id="builds" class="chapter chapter--compact" aria-labelledby="builds-title">
-        <ChapterMarker number="03" label="BUILDS" />
-        <h2 id="builds-title">Things made to<br /><em>be used.</em></h2>
-        <p class="section-intro">Selected systems, prototypes, and experiments crossing software, AI, data, and engineering.</p>
-      </section>
-
-      <section id="signals" class="chapter chapter--compact" aria-labelledby="signals-title">
-        <ChapterMarker number="04" label="SIGNALS" />
-        <h2 id="signals-title">Evidence over<br /><em>noise.</em></h2>
-        <p class="section-intro">Skills are the result of projects, iterations, and work that can be inspected.</p>
-      </section>
-
-      <section id="contact" class="chapter chapter--compact" aria-labelledby="contact-title">
-        <ChapterMarker number="05" label="CONTACT" />
-        <h2 id="contact-title">Open a channel<br /><em>when the work is real.</em></h2>
-        <p class="section-intro">For collaborations, opportunities, or a good technical question.</p>
-      </section>
+      <HeroChapter />
+      <JourneyChapter />
+      <ProjectGrid />
+      <SignalsChapter />
+      <ContactChapter />
     </main>
 
     <footer class="site-footer"><span>© {new Date().getFullYear()} KAISER / YUE YU</span><span>BUILT LOCALLY · SHIPPED CAREFULLY</span></footer>

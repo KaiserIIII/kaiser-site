@@ -1,0 +1,36 @@
+---
+import ChapterMarker from './ChapterMarker.astro';
+import { projects } from '../data/projects';
+---
+
+<section id="builds" class="chapter chapter--builds" aria-labelledby="builds-title">
+  <ChapterMarker number="03" label="BUILDS" />
+  <div class="section-heading section-heading--split" data-reveal>
+    <div>
+      <h2 id="builds-title">Things made to<br /><em>be used.</em></h2>
+    </div>
+    <p class="section-intro">
+      <span data-language-copy="zh">精选系统、原型和实验，穿过软件、AI、数据与工程。</span>
+      <span data-language-copy="en" hidden>Selected systems, prototypes, and experiments crossing software, AI, data, and engineering.</span>
+    </p>
+  </div>
+  <div class="project-filters" role="group" aria-label="Filter projects">
+    <button class="filter-button is-active" type="button" data-project-filter="all" aria-pressed="true">ALL / 05</button>
+    <button class="filter-button" type="button" data-project-filter="active" aria-pressed="false">ACTIVE</button>
+    <button class="filter-button" type="button" data-project-filter="selected" aria-pressed="false">SELECTED</button>
+    <button class="filter-button" type="button" data-project-filter="exploratory" aria-pressed="false">EXPLORATORY</button>
+  </div>
+  <div class="project-grid" data-project-grid>
+    {projects.map((project, index) => (
+      <article class:list={["project-card", { "project-card--featured": project.featured }]} data-project-card data-project-status={project.status} data-reveal>
+        <a class="project-card__link" href={`/projects/${project.slug}/`}>
+          <div class="project-card__top"><span>{String(index + 1).padStart(2, '0')}</span><span>{project.status.toUpperCase()}</span></div>
+          <p class="project-eyebrow">{project.eyebrow}</p>
+          <h3>{project.title}</h3>
+          <p class="project-summary">{project.summary}</p>
+          <div class="project-card__bottom"><span>{project.role}</span><span class="project-arrow">↗</span></div>
+        </a>
+      </article>
+    ))}
+  </div>
+</section>

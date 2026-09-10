@@ -1,0 +1,46 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import ChapterMarker from '../../components/ChapterMarker.astro';
+import { projects, type Project } from '../../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<SiteLayout title={`${project.title} / KAISER`} description={project.summary}>
+  <div class="site-shell">
+    <SiteHeader />
+    <main class="project-detail">
+      <a class="back-link" href="/">← BACK TO PROFILE</a>
+      <section class="detail-hero" aria-labelledby="detail-title">
+        <ChapterMarker number="03" label="BUILD DETAIL" />
+        <p class="project-eyebrow">{project.eyebrow}</p>
+        <h1 id="detail-title">{project.title}</h1>
+        <p class="detail-summary">{project.summary}</p>
+      </section>
+      <section class="detail-grid" aria-label="Project information">
+        <div class="detail-body">
+          <p class="detail-kicker">THE SIGNAL</p>
+          <p>{project.details}</p>
+        </div>
+        <dl class="detail-meta">
+          <div><dt>ROLE</dt><dd>{project.role}</dd></div>
+          <div><dt>STATUS</dt><dd>{project.status.toUpperCase()}</dd></div>
+          <div><dt>STACK</dt><dd>{project.stack.join(' · ')}</dd></div>
+        </dl>
+      </section>
+      <div class="detail-footer"><a class="button button--text" href="/">Return to all builds <span>↗</span></a>{project.links.map((link) => <a class="button button--text" href={link.href} target="_blank" rel="noreferrer">{link.label} <span>↗</span></a>)}</div>
+    </main>
+  </div>
+</SiteLayout>

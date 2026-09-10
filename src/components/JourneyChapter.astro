@@ -1,0 +1,28 @@
+---
+import ChapterMarker from './ChapterMarker.astro';
+import { experience } from '../data/experience';
+---
+
+<section id="journey" class="chapter chapter--journey" aria-labelledby="journey-title">
+  <ChapterMarker number="02" label="JOURNEY" />
+  <div class="section-heading" data-reveal>
+    <h2 id="journey-title">From engineering context<br /><em>to software systems.</em></h2>
+    <p class="section-intro">
+      <span data-language-copy="zh">学习、现场工作和把好奇心变成能力的关键节点。</span>
+      <span data-language-copy="en" hidden>A timeline of learning, field work, and the decisions that turn curiosity into capability.</span>
+    </p>
+  </div>
+  <div class="journey-list">
+    {experience.map((item) => (
+      <article class="journey-item" data-reveal>
+        <div class="journey-meta"><span>{item.date}</span><i></i><span>{item.kind.toUpperCase()}</span></div>
+        <div class="journey-body">
+          <h3>{item.title}</h3>
+          <p class="journey-organization">{item.organization}</p>
+          <p>{item.description}</p>
+        </div>
+        <span class="journey-status">{item.status === 'active' ? 'ACTIVE' : 'SELECTED'}</span>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+import ChapterMarker from './ChapterMarker.astro';
+import { profile } from '../data/profile';
+---
+
+<section class="chapter chapter--hero" aria-labelledby="hero-title">
+  <ChapterMarker number="01" label="PROFILE" />
+  <div class="hero-layout">
+    <div class="hero-copy" data-reveal>
+      <p class="eyebrow">PERSONAL SYSTEM / {new Date().getFullYear()}</p>
+      <h1 id="hero-title"><span>KAISER</span><em>Yue Yu</em></h1>
+      <p class="hero-lead">
+        <span data-language-copy="zh">{profile.headline.zh}</span>
+        <span data-language-copy="en" hidden>{profile.headline.en}</span>
+      </p>
+      <div class="hero-actions">
+        <a class="button button--primary" href="#builds">Explore the builds <span>↗</span></a>
+        <a class="button button--text" href="#contact">Open a channel <span>↘</span></a>
+      </div>
+    </div>
+    <div class="hero-signal" aria-label="Kaiser system status" data-reveal>
+      <div class="signal-ring signal-ring--outer"></div>
+      <div class="signal-ring signal-ring--inner"></div>
+      <div class="signal-core"><span>YU</span></div>
+      <div class="signal-readout"><span>STATUS</span><strong>BUILDING</strong><small>LOCAL / GLOBAL</small></div>
+    </div>
+  </div>
+  <div class="hero-footer"><span>SCROLL TO TRACE THE SYSTEM</span><span class="scroll-cue">↓</span><span>LOCAL / GLOBAL</span></div>
+</section>
