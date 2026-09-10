@@ -9,6 +9,7 @@ dist/
 .local/
 .local/cloudflared/
 ops/cloudflared/config.yml
+.playwright-cli/
 *.log
 backend/.env
 backend/venv/

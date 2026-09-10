@@ -6,6 +6,8 @@ describe('built homepage', () => {
     const html = readFileSync('dist/index.html', 'utf8');
     expect(html).toContain('<main');
     expect(html).toContain('KAISER');
+    expect(html).toContain('rel="icon"');
+    expect(existsSync('dist/favicon.svg')).toBe(true);
   });
 
   it('contains the public chapters and accessibility hooks', () => {
