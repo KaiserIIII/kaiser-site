@@ -1,0 +1,23 @@
+:8080 {
+	root * dist
+	encode gzip
+
+	@health path /healthz
+	handle @health {
+		respond "ok" 200
+	}
+
+	@static path /_astro/* /assets/*
+	header @static Cache-Control "public, max-age=604800, immutable"
+
+	@html path *.html
+	header @html Cache-Control "no-cache"
+
+	handle {
+		file_server
+	}
+
+	handle_errors {
+		respond "Not Found" 404
+	}
+}
