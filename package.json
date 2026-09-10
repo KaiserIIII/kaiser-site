@@ -1,0 +1,21 @@
+{
+  "name": "kaiser-personal-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest",
+    "audit:public": "powershell -ExecutionPolicy Bypass -File scripts/audit-public-content.ps1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "@types/node": "^22.20.2",
+    "astro": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}
