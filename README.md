@@ -1,5 +1,7 @@
 # KAISER _III
 
+> **GitHub profile introduction:** [Ready-to-publish profile README](GITHUB_PROFILE_README.md) · [Selected public projects](https://github.com/KaiserIIII?tab=repositories)
+
 KAISER _III is a cinematic, high-technology personal portfolio for 于越 / Yue Yu. It presents a reviewed public profile, an engineering-and-AI journey, selected builds, capability signals, and a contact point in one responsive static site.
 
 ## Local development
