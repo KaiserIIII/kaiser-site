@@ -9,6 +9,12 @@ describe('public interactive experience', () => {
     expect(html).toContain('<svg id="graph"');
     expect(html).toContain('prefers-reduced-motion');
     expect(html).toContain('aria-pressed');
+    expect(html).toContain('data-lang="zh"');
+    expect(html).toContain('data-audience="industry"');
+    expect(html).toContain('data-audience="research"');
+    expect(html).toContain('Northeast Forestry University');
+    expect(html).toContain('120 backend + 33 frontend');
+    expect(html).toContain('navigator.clipboard.writeText(message)');
     expect(html).toContain('pointermove');
     expect(html).toContain('requestAnimationFrame(tick)');
     expect(html).not.toContain('<script src=');
