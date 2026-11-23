@@ -1,165 +1,265 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Yue Yu. Interactive project and engineering capability system.">
-<title>Yue Yu — Systems, made visible</title>
-<style>
-:root{--paper:#f6f1e9;--canvas:#fcfaf6;--ink:#302c28;--muted:#7f7469;--line:#e0d6c9;--terra:#ba684d;--sage:#6b8275;--blue:#718aa3;--violet:#8b7c94;--serif:Georgia,Times New Roman,serif;--sans:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}button{font:inherit}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid var(--terra);outline-offset:3px}
-.page{max-width:1420px;margin:auto;padding:0 44px}.header{height:81px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
-.brand{font:500 29px var(--serif);letter-spacing:-1px;text-decoration:none}.brand span{font:700 10px var(--sans);letter-spacing:2px;color:var(--terra);margin-left:12px}.nav{display:flex;gap:29px}.nav a{text-decoration:none;font-weight:650;letter-spacing:1px;text-transform:uppercase;font-size:11px}.nav a:hover{color:var(--terra)}
-.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:8vw;align-items:end;padding:78px 0 49px}.kicker{font:700 11px var(--sans);color:var(--terra);letter-spacing:2.8px;text-transform:uppercase}.hero h1{font:500 clamp(55px,6.5vw,103px)/.99 var(--serif);letter-spacing:-4.7px;margin:24px 0 0}.hero h1 em{color:var(--terra);font-weight:400}.hero-note{max-width:355px;justify-self:end;color:#665d54;font-size:19px;line-height:1.6}.hero-note a{font-size:12px;font-weight:750;letter-spacing:1.1px;text-transform:uppercase;display:inline-block;margin-top:10px;text-decoration:none;border-bottom:1px solid var(--terra);padding-bottom:7px}
-.section-heading{display:flex;justify-content:space-between;align-items:center;margin:16px 0 15px;gap:15px;font-size:12px;font-weight:750;letter-spacing:1.5px;text-transform:uppercase}.live{display:inline-block;height:8px;width:8px;border-radius:50%;background:var(--sage);margin-right:12px;box-shadow:0 0 0 5px #6b82751c}.small{font-size:11px;color:var(--muted);font-weight:450;text-transform:none;letter-spacing:.4px}
-.workspace{border:1px solid var(--line);background:var(--canvas);border-radius:17px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.8fr) minmax(285px,.82fr);box-shadow:0 15px 50px #56452e0b}
-.graph-col{border-right:1px solid var(--line);min-width:0;position:relative;overflow-x:auto;background-image:linear-gradient(90deg,#c4b7a012 1px,transparent 1px),linear-gradient(#c4b7a012 1px,transparent 1px);background-size:34px 34px}
-.graph-top{padding:21px 25px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}.label{font:600 11px var(--sans);letter-spacing:1.3px;color:var(--muted)}.switch{padding:4px;border-radius:24px;background:#eee8df;display:inline-flex;gap:3px}.switch button{border:0;cursor:pointer;background:transparent;border-radius:20px;padding:8px 12px;font-size:11px;color:#7b7065}.switch button[aria-pressed=true]{background:#fffefa;color:var(--ink);box-shadow:0 1px 5px #0000000e}
-#graph{display:block;height:500px;width:100%;min-width:680px;touch-action:none}#graph text{user-select:none;pointer-events:none;font-family:var(--sans)}.g-node{cursor:grab}.g-node:active{cursor:grabbing}.graph-foot{padding:0 25px 20px;display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.graph-foot b{font-weight:600;color:var(--terra)}
-.inspector{display:flex;flex-direction:column;padding:26px 27px}.panel-top{font-size:12px;letter-spacing:1.1px;color:var(--terra);font-weight:700}.panel-top span{float:right;color:#9e9287}.inspector h2{font:500 clamp(30px,3vw,47px)/1.12 var(--serif);letter-spacing:-.8px;margin:40px 0 14px}.inspector p{margin:0;color:#655d56;font-size:14px;line-height:1.7;min-height:95px}.divider{height:1px;background:var(--line);margin:18px 0}.inspector h3{font-size:11px;color:var(--terra);letter-spacing:1.7px;text-transform:uppercase;margin:0 0 8px}.inspector ul{list-style:none;padding:0;margin:0}.inspector li{padding:9px 0;font-size:13px;line-height:1.55;color:#514a44}.inspector li:before{content:"↗";color:var(--terra);margin-right:11px}.outlink{align-self:start;margin-top:auto;padding-top:23px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:1px;border-bottom:1px solid var(--terra);padding-bottom:7px}.outlink:hover{color:var(--terra)}
-.controls{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:22px 0}.controls span{font-size:12px;color:var(--muted);margin-right:9px}.controls button{border:1px solid #d5c9ba;border-radius:40px;background:transparent;padding:8px 15px;font-size:12px;cursor:pointer;color:#695f55}.controls button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:white}
-.work{padding:80px 0 104px}.work h2{font:500 clamp(38px,4.7vw,64px)/1 var(--serif);letter-spacing:-2px;margin:16px 0 35px}.work h2 em{color:var(--terra)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{min-height:221px;background:#fbf8f3;border:1px solid var(--line);border-radius:13px;display:flex;flex-direction:column;padding:26px;text-decoration:none;transition:transform .25s,border-color .25s}.card:hover{transform:translateY(-6px);border-color:#a99480}.card small{color:var(--terra);font:700 11px var(--sans);letter-spacing:1px}.card h3{font:500 30px var(--serif);margin:22px 0 12px}.card p{font-size:13px;line-height:1.65;color:#665c53;margin:0}.card strong{font-size:11px;color:var(--terra);margin-top:auto;padding-top:17px;text-transform:uppercase;letter-spacing:1px}
-.footer{border-top:1px solid var(--line);padding:25px 0 45px;display:flex;justify-content:space-between;gap:14px;color:var(--muted);font-size:11px}
-#help{position:fixed;z-index:30;inset:0;background:#272019ad;display:none;align-items:center;justify-content:center;padding:16px}#help[aria-hidden=false]{display:flex}.help-card{background:#fcfaf6;border-radius:20px;padding:36px;width:min(480px,100%)}.help-card h2{font:500 40px var(--serif);margin:15px 0}.help-card p{line-height:1.9;font-size:14px}.help-card button{border:0;padding:12px 17px;border-radius:8px;background:var(--ink);color:white;cursor:pointer}kbd{background:#e9dfd4;padding:2px 8px;border-radius:4px}
-@media(max-width:1100px){.page{padding:0 24px}.hero{grid-template-columns:1fr;gap:10px}.hero-note{max-width:750px;justify-self:start}.workspace{grid-template-columns:1fr}.graph-col{border-right:0;border-bottom:1px solid var(--line)}.inspector p{min-height:0}.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:650px){.page{padding:0 15px}.header{height:65px}.brand{font-size:23px}.nav{gap:15px}.nav a{font-size:10px}.hero{padding:54px 0 40px}.hero h1{font-size:clamp(52px,12vw,74px);letter-spacing:-2.5px}.hero-note{font-size:15px}#graph{height:354px}.graph-top{padding:15px 14px}.graph-foot{padding:0 14px 15px}.inspector{padding:24px}.inspector h2{margin:22px 0 10px}.section-heading .small{display:none}.cards{grid-template-columns:1fr}.footer{flex-direction:column}.work{padding:60px 0}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card{transition:none}}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Yue Yu / 于越 — software, game systems, construction computing and reproducible research. An interactive portfolio.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Yue Yu / 于越 — Made with curiosity">
+  <meta property="og:description" content="A collection of working systems, real experiments and the questions connecting them.">
+  <meta property="og:image" content="https://kaiseriiii.github.io/KaiserIIII/cover.svg">
+  <meta property="og:url" content="https://kaiseriiii.github.io/KaiserIIII/">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Yue Yu / 于越 — Made with curiosity</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="canonical" href="https://kaiseriiii.github.io/KaiserIIII/">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./data.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="scroll-progress" aria-hidden="true"></div>
 
-/* Editorial first screen: education, evidence, and audience focus */
-.header{gap:18px}.nav{margin-left:auto}.lang-switch,.lens-options{display:inline-flex;align-items:center;gap:3px;padding:4px;border:1px solid var(--line);border-radius:100px;background:#efe8de}
-.lang-switch button,.lens-options button{border:0;border-radius:100px;background:transparent;cursor:pointer;color:#75685c;padding:8px 13px;font-size:11px;font-weight:700;white-space:nowrap}
-.lang-switch button[aria-pressed=true],.lens-options button[aria-pressed=true]{background:#fffefa;color:var(--ink);box-shadow:0 2px 8px #0000000b}
-.hero{grid-template-columns:minmax(0,1.23fr) minmax(320px,.77fr);align-items:center;gap:4vw;padding:70px 0}.identity{min-width:0}.credentials{margin:18px 0;color:#796b5e;font-size:13px;line-height:1.65}.hero h1{font-size:clamp(50px,5.4vw,87px);letter-spacing:-3.5px;margin:20px 0 0}.crossline{margin:21px 0;color:#6b5e53;font-size:15px;line-height:1.8}
-.lens-group{display:flex;flex-wrap:wrap;gap:13px;align-items:center;margin-top:23px}.lens-group>span{font-size:12px;color:#7f7164;font-weight:650}.lens-copy{min-height:55px;font-size:15px;line-height:1.7;color:#594e45;margin:17px 0}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.primary-link,#copy-brief{display:inline-block;padding:12px 16px;border:1px solid var(--ink);border-radius:8px;font-size:12px;font-weight:750;letter-spacing:.2px;text-decoration:none;cursor:pointer;background:var(--ink);color:white}
-#copy-brief{background:transparent;color:var(--ink);border-color:#d3c8bb}#copy-feedback{font-size:11px;color:var(--sage)}
-.credential-card{padding:26px 29px;background:#fffdfa;border:1px solid var(--line);border-radius:17px;box-shadow:0 18px 48px #56412f10}.credential-title{display:flex;align-items:center;justify-content:space-between;padding-bottom:17px;border-bottom:1px solid var(--line);font-size:11px;font-weight:800;letter-spacing:1.3px;color:var(--terra)}.status-ring{width:9px;height:9px;border-radius:100%;background:var(--sage);box-shadow:0 0 0 5px #6b827516}
-.credential-row{padding:17px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}.credential-row small{font-size:11px;letter-spacing:1px;font-weight:700;color:#9b897a}.credential-row strong{font-size:14px;font-weight:620;line-height:1.5}.credential-row a{color:#965a45;text-decoration:none;border-bottom:1px solid #cdb3a3}.credential-foot{font-size:11px;line-height:1.7;color:#928579;margin:17px 0 0}
-.work-note{margin:-10px 0 30px;font-size:15px;line-height:1.65;color:#74675d}.research-strip{border-top:1px solid var(--line);padding:70px 0 110px;display:grid;grid-template-columns:1.2fr .8fr;gap:6vw;align-items:center}.research-strip h2{font:500 clamp(38px,4.2vw,61px)/1.08 var(--serif);letter-spacing:-2px;margin:16px 0 19px}.research-strip p{font-size:15px;max-width:660px;line-height:1.85;color:#6b6055}.research-links{display:flex;flex-wrap:wrap;gap:15px;margin-top:25px}.research-links a{color:#965943;font-size:12px;text-decoration:none;border-bottom:1px solid #bc9480;padding-bottom:7px}.research-strip svg{max-width:310px;width:100%;justify-self:center;animation:gentle 16s ease-in-out infinite alternate}@keyframes gentle{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
-@media(max-width:1100px){.hero{grid-template-columns:1fr}.credential-card{max-width:790px}.research-strip{grid-template-columns:1fr;gap:20px}.research-strip svg{justify-self:start}}
-@media(max-width:650px){.header{flex-wrap:wrap;height:auto;padding:13px 0;gap:10px}.nav{order:3;width:100%;justify-content:space-between}.hero{padding:40px 0}.hero h1{font-size:clamp(49px,11vw,67px);letter-spacing:-2.3px}.credential-card{padding:20px}.lens-group>span{flex-basis:100%}.research-strip{padding:55px 0}.lens-copy{min-height:0}}
-@media(prefers-reduced-motion:reduce){.research-strip svg{animation:none}}
-</style></head>
-<body><div class="page">
-<header class="header"><a class="brand" href="#about">Yue Yu<span>于越 / KAISER</span></a><nav class="nav"><a href="#explore" data-t="navExplore">Explore</a><a href="#work" data-t="navWork">Work</a><a href="https://github.com/KaiserIIII">GitHub ↗</a></nav><div class="lang-switch" role="group" aria-label="Choose language"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="zh" aria-pressed="false">中文</button></div></header>
-<main>
-<section class="hero" id="about" aria-labelledby="hero-title"><div class="identity"><div class="kicker">YUE YU / 于越  ·  SOFTWARE / GAMES / EXPERIMENTS</div><p class="credentials" data-t="credentials">Northeast Forestry University · Engineering Management undergraduate · Computer Science & Technology minor</p><h1 id="hero-title"><span data-t="headline1">Things I build.</span><br><em data-t="headline2">Questions I explore.</em></h1><p class="crossline" data-t="crossline">工程管理本科 × 计算机科学与技术辅修 · 工程问题、软件系统与可复现实验</p><div class="lens-group"><span data-t="lensPrompt">Follow a thread</span><div class="lens-options" role="group" aria-label="Review perspective"><button data-audience="industry" aria-pressed="true" data-t="industry">Building</button><button data-audience="research" aria-pressed="false" data-t="research">Exploring</button></div></div><p id="lens-copy" class="lens-copy" aria-live="polite"></p><div class="hero-ctas"><a href="#explore" class="primary-link" data-t="exploreCta">Explore the projects ↗</a><button id="copy-brief" type="button" data-t="copyCta">Copy bio</button><span id="copy-feedback" role="status"></span></div></div><aside class="credential-card" aria-label="Verified profile evidence"><div class="credential-title"><span data-t="atGlance">A FEW THINGS I'VE MADE</span><span class="status-ring" aria-hidden="true"></span></div><div class="credential-row"><small>01 · <span data-t="schoolLabel">EDUCATION</span></small><strong data-t="schoolFact">Northeast Forestry University · Engineering Management + CS minor</strong></div><div class="credential-row"><small>02 · <span data-t="productLabel">SHIPPED PRODUCT</span></small><strong>CardCraft · <a href="https://store.steampowered.com/app/4338300/" data-t="steamFact">Steam demo ↗</a></strong></div><div class="credential-row"><small>03 · <span data-t="validationLabel">TEST EVIDENCE</span></small><strong>Zhixu · <a href="https://github.com/KaiserIIII/zhixu/blob/main/docs/verification.md" data-t="zhixuFact">120 backend + 33 frontend tests ↗</a></strong></div><div class="credential-row"><small>04 · <span data-t="reproductionLabel">REAL REPRODUCTION</span></small><strong>MigrationWitness · <a href="https://github.com/KaiserIIII/migrationwitness/blob/main/CROSS_VERSION_RESULTS.md">PostgreSQL 16 / 17 ↗</a></strong></div><p class="credential-foot" data-t="scopeNote">Each result links to public releases or dated verification; not a skill rating.</p></aside></section>
-<section id="explore"><div class="section-heading"><div><i class="live"></i><span data-t="graphTitle">Connections between projects</span></div><span class="small" data-t="graphHint">Select · drag · filter · press ? for shortcuts</span></div>
-<div class="workspace"><div class="graph-col"><div class="graph-top"><span class="label">CAPABILITY × EVIDENCE / FIELD 01</span><div class="switch" role="group" aria-label="Visualization mode"><button data-mode="connections" aria-pressed="true">Connections</button><button data-mode="evidence" aria-pressed="false">Evidence</button></div></div><svg id="graph" role="img" tabindex="0" viewBox="0 0 1000 560" aria-label="Interactive node graph connecting engineering disciplines to six inspectable projects"></svg><div class="graph-foot"><span id="visible-count">4 domains / 6 projects</span><b>◌ An actual live model</b></div></div>
-<aside class="inspector" aria-live="polite"><div class="panel-top">FOCUS / <span id="focus-index">01</span></div><h2 id="focus-title">MigrationWitness</h2><p id="focus-desc"></p><div class="divider"></div><h3>Inspectable evidence</h3><ul id="focus-evidence"></ul><a class="outlink" href="#" id="focus-link" target="_blank" rel="noopener noreferrer">Inspect source ↗</a></aside></div>
-<p class="site-note" style="font-size:12px;color:#88796b;line-height:1.7;margin:15px 0;">A small experiment in connecting projects by the problems they share. · <a href="https://github.com/KaiserIIII/KaiserIIII/tree/main/experience">View source ↗</a></p>
-<div class="controls" role="group" aria-label="Filter projects"><span>FOCUS DOMAIN</span><button data-filter="all" aria-pressed="true">All systems</button><button data-filter="systems" aria-pressed="false">Architecture</button><button data-filter="data" aria-pressed="false">Data / protocols</button><button data-filter="verify" aria-pressed="false">Verification</button><button data-filter="research" aria-pressed="false">Research</button><button id="show-help" aria-haspopup="dialog">? Shortcuts</button></div></section>
-<section class="work" id="work"><div class="kicker" data-t="workKicker">SELECTED WORK / MY PROJECTS</div><h2><span data-t="workTitleA">A few things</span> <em data-t="workTitleB">I've made.</em></h2><p class="work-note" data-t="workNote">Games, tools and experiments, each with its own story.</p><div class="cards">
-<a class="card" data-project="cardcraft" href="https://github.com/KaiserIIII/cardcraft-engineering-portfolio"><small data-t="card1tag">01 / PRODUCT DELIVERY</small><h3>CardCraft</h3><p data-t="card1text">Godot + Steam multiplayer, Workshop and save migration, with a playable demo and public engineering cases.</p><strong data-t="card1link">Inspect the game ↗</strong></a>
-<a class="card" data-project="zhixu" href="https://github.com/KaiserIIII/zhixu"><small data-t="card2tag">02 / FULL-STACK SYSTEMS</small><h3>Zhixu</h3><p data-t="card2text">FastAPI, tenant isolation, RAG provenance and workflows. Dated verification: 120 backend and 33 frontend tests.</p><strong data-t="card2link">Inspect source + tests ↗</strong></a>
-<a class="card" data-project="migrationwitness" href="https://github.com/KaiserIIII/migrationwitness"><small data-t="card3tag">03 / RELIABILITY RESEARCH</small><h3>MigrationWitness</h3><p data-t="card3text">PostgreSQL 16/17 pg-osc regression reproduction with independent SQL contract checks.</p><strong data-t="card3link">Inspect real reproduction ↗</strong></a>
-</div></section><section class="research-strip" id="research"><div><div class="kicker" data-t="researchKicker">ANOTHER SIDE OF MY WORK</div><h2 data-t="researchTitle">Always exploring.</h2><p data-t="researchCopy">Alongside products, I explore databases, computational engineering and reproducible experiments. Sometimes the most useful result is learning why something didn't work.</p><div class="research-links"><a href="https://github.com/KaiserIIII/construction-cost-analyzer">Construction Cost Analyzer ↗</a><a href="https://github.com/KaiserIIII/reproshift-artifact">ReproShift ↗</a><a href="https://github.com/KaiserIIII/return-to-source-hysteresis">Return-to-Source ↗</a></div></div><svg viewBox="0 0 310 310" aria-hidden="true"><circle cx="155" cy="155" r="136" stroke="#ddcebe" fill="none"/><circle cx="155" cy="155" r="95" stroke="#c7b4a3" fill="none"/><circle cx="155" cy="155" r="55" fill="#f1e4d8" stroke="#c7b4a3"/><path d="M155 20C225 96 100 250 155 290" fill="none" stroke="#ba684d" stroke-width="2"/><path d="M20 155C93 75 235 243 290 155" fill="none" stroke="#718aa3" stroke-width="2"/><circle cx="155" cy="155" r="8" fill="#ba684d"/></svg></section></main><footer class="footer"><span>© KAISER / YUE YU · SYSTEMS MADE VISIBLE</span><span><a href="https://kaiseriii.tech">kaiseriii.tech</a> · <a href="https://github.com/KaiserIIII/KaiserIIII">GitHub source</a></span></footer></div>
-<div id="help" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="help-heading"><div class="help-card"><div class="kicker">Interaction guide</div><h2 id="help-heading">Explore the system.</h2><p><kbd>←</kbd> / <kbd>→</kbd> Select projects<br><kbd>0</kbd> Show all · <kbd>1</kbd>–<kbd>4</kbd> Focus a domain<br><kbd>?</kbd> Show this panel · <kbd>Esc</kbd> Close<br><br>Drag a project node. The connected curves and moving signals recompute as you move it.</p><button id="close-help">Continue exploring</button></div></div>
-<script>
-(function(){
-"use strict";
-var svg=document.getElementById("graph"),ns="http://www.w3.org/2000/svg";
-var D=[
-{id:"systems",name:"Systems",color:"#ba684d",x:145,y:108},
-{id:"data",name:"Data / protocols",color:"#6b8275",x:145,y:219},
-{id:"verify",name:"Verification",color:"#718aa3",x:145,y:330},
-{id:"research",name:"Research",color:"#8b7c94",x:145,y:441}
-];
-var P=[
-{id:"cardcraft",name:"CardCraft",tags:["systems","verify"],x:785,y:70,kind:"GODOT / STEAM",url:"https://github.com/KaiserIIII/cardcraft-engineering-portfolio",desc:"A game with Steam P2P lifecycle, multiplayer message validation, Workshop content, save migrations and a public demo.",facts:["Published Steam demo and case studies","Lobby and message validation lifecycle","Workshop and persistence boundaries"]},
-{id:"zhixu",name:"Zhixu",tags:["systems","data"],x:785,y:156,kind:"FASTAPI / RAG",url:"https://github.com/KaiserIIII/zhixu",desc:"Multi-tenant knowledge services, hybrid retrieval, evidence-linked answers and versioned visual workflows.",facts:["Inspect service and storage boundaries","Retrieval provenance and workflow versions","Backend and frontend validation notes"]},
-{id:"wifiscope",name:"WiFiScope",tags:["data","verify"],x:785,y:242,kind:"TCP / TLS / PCAP",url:"https://github.com/KaiserIIII/WiFiScope",desc:"A network investigation workstation with authorized bounded checks, privacy-preserving case evidence and Windows releases.",facts:["Inspectable Windows release","CI on Windows and Linux","Network and privacy scope limitations"]},
-{id:"migrationwitness",name:"MigrationWitness",tags:["data","verify","research"],x:785,y:328,kind:"POSTGRESQL / CONTRACT",url:"https://github.com/KaiserIIII/migrationwitness",desc:"Checks the actual application contract after database migrations. Includes a real PostgreSQL permission-regression reproduction.",facts:["Reproduced pg-osc privilege regression","Independent SQL contract oracle","PostgreSQL 16 / 17 execution record"]},
-{id:"cost",name:"Cost Analyzer",tags:["systems","data"],x:785,y:414,kind:"QUANTIFICATION / BOQ",url:"https://github.com/KaiserIIII/construction-cost-analyzer",desc:"Auditable quantity measurement, unit-rate estimating and appraisal, with explicit Decimal rounding rules and shared calculations.",facts:["BOQ and unit-rate engine","Exposed cost-model assumptions","Local browser and CLI outputs"]},
-{id:"reproshift",name:"ReproShift",tags:["research","verify"],x:785,y:500,kind:"REPRODUCIBILITY",url:"https://github.com/KaiserIIII/reproshift-artifact",desc:"A versioned experimental artifact for historical Python dependency compatibility and reproducibility studies.",facts:["Repeatable experiment protocol","Historical dependency snapshots","Transparent experimental limitations"]}
-];
-var filter="all",selected="migrationwitness",hover=null,mode="connections",drag=null,lastStart=null;
-var make=function(name,attrs){var v=document.createElementNS(ns,name);Object.keys(attrs||{}).forEach(function(k){v.setAttribute(k,String(attrs[k]));});return v;};
-var bg=make("g"),lines=make("g"),particles=make("g"),nodes=make("g");svg.append(bg,lines,particles,nodes);
-for(var i=0;i<12;i++)bg.append(make("path",{d:"M0 "+(i*50+12)+"H1000",stroke:"#e7ded4","stroke-width":"0.8",opacity:"0.36"}));
-var E=[];P.forEach(function(p){p.tags.forEach(function(tag){E.push({a:D.find(function(d){return d.id===tag;}),b:p});});});
-var between=function(a,b){var start=a.x+50,end=b.x-106,c1=start+(end-start)*.44,c2=start+(end-start)*.64;return "M"+start+" "+a.y+" C"+c1+" "+a.y+", "+c2+" "+b.y+", "+end+" "+b.y;};
-var V=E.map(function(e,i){var line=make("path",{d:between(e.a,e.b),stroke:"#ddcfc2","stroke-width":"1.4",fill:"none"});lines.append(line);var dot=make("circle",{r:2.8,fill:e.a.color,opacity:0});particles.append(dot);return {e:e,line:line,dot:dot,i:i};});
-function vis(p){return filter==="all"||p.tags.indexOf(filter)>=0;}
-function active(v){return vis(v.e.b)&&(!selected||v.e.b.id===selected)&&(!hover||v.e.b.id===hover);}
-function styleEdges(){
-V.forEach(function(v){var on=active(v);v.line.setAttribute("d",between(v.e.a,v.e.b));v.line.setAttribute("stroke",on?v.e.a.color:"#dbd3c8");v.line.setAttribute("stroke-width",on?"2.3":"1.1");v.line.setAttribute("opacity",on?"0.8":"0.28");v.dot.setAttribute("opacity",on?"0.9":"0");v.line.setAttribute("stroke-dasharray",mode==="evidence"?"3 7":"none");});
-}
-function update(){styleEdges();
-nodes.replaceChildren();
-D.forEach(function(d){var g=make("g",{class:"g-node",transform:"translate("+d.x+" "+d.y+")",role:"button",tabindex:"0",opacity:filter!=="all"&&filter!==d.id?".25":"1","aria-label":"Filter by "+d.name});
-g.append(make("circle",{r:28,fill:d.color,opacity:".12"}),make("circle",{r:18,fill:"#fffefa",stroke:d.color,"stroke-width":"1.8"}),make("circle",{r:4,fill:d.color}));var t=make("text",{y:43,"font-size":"15","font-weight":"650","text-anchor":"middle",fill:"#5f554e"});t.textContent=d.name;g.append(t);g.addEventListener("click",function(){setFilter(d.id);});g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setFilter(d.id);}});nodes.append(g);});
-P.forEach(function(p){var isFocused=p.id===selected;var g=make("g",{class:"g-node",transform:"translate("+p.x+" "+p.y+")",role:"button",tabindex:"0","aria-label":"Inspect "+p.name,opacity:vis(p)?"1":"0.15"});g.append(make("rect",{x:-108,y:-29,width:216,height:62,rx:12,fill:isFocused?"#fff5eb":"#fffdfa",stroke:isFocused?"#ba684d":"#ddcfc0","stroke-width":isFocused?"2":"1"}));var n=make("text",{x:-88,y:-3,"font-size":18,"font-weight":700,fill:"#302c28"});n.textContent=p.name;g.append(n);var tag=make("text",{x:-88,y:17,"font-size":11,fill:"#9a8a7b"});tag.textContent=p.kind;g.append(tag);g.append(make("circle",{cx:90,cy:1,r:isFocused?5:3,fill:isFocused?"#ba684d":"#bfb3a6"}));
-g.addEventListener("pointerenter",function(){hover=p.id;styleEdges();});g.addEventListener("pointerleave",function(){hover=null;styleEdges();});
-g.addEventListener("pointerdown",function(e){if(!vis(p))return;drag=p;lastStart={x:e.clientX,y:e.clientY};g.setPointerCapture(e.pointerId);});
-g.addEventListener("pointermove",function(e){if(drag!==p)return;var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var mat=svg.getScreenCTM();if(!mat)return;var local=pt.matrixTransform(mat.inverse());p.x=Math.max(690,Math.min(865,local.x));p.y=Math.max(48,Math.min(515,local.y));g.setAttribute("transform","translate("+p.x+" "+p.y+")");V.forEach(function(v){v.line.setAttribute("d",between(v.e.a,v.e.b));});});
-g.addEventListener("pointerup",function(e){if(drag!==p)return;drag=null;if(Math.hypot(e.clientX-lastStart.x,e.clientY-lastStart.y)<7)choose(p.id);});
-g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(p.id);}});nodes.append(g);});
-}
-function choose(id){selected=id;var p=P.find(function(x){return x.id===id;});if(!p)return;document.getElementById("focus-index").textContent=String(P.indexOf(p)+1).padStart(2,"0");document.getElementById("focus-title").textContent=p.name;document.getElementById("focus-desc").textContent=currentLanguage==="zh"&&zhProjects[p.id]?zhProjects[p.id].desc:p.desc;var list=document.getElementById("focus-evidence");list.replaceChildren();var facts=currentLanguage==="zh"&&zhProjects[p.id]?zhProjects[p.id].facts:p.facts;facts.forEach(function(f){var li=document.createElement("li");li.textContent=f;list.append(li);});document.getElementById("focus-link").href=p.url;update();}
-function setFilter(x){filter=x;document.querySelectorAll("[data-filter]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.filter===x));});var shown=P.filter(vis);document.getElementById("visible-count").textContent=(x==="all"?"4 domains":D.find(function(d){return d.id===x;}).name)+" / "+shown.length+" projects";if(!shown.some(function(p){return p.id===selected;}))selected=shown[0].id;choose(selected);}
-document.querySelectorAll("[data-filter]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.dataset.filter);});});
-document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){mode=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(function(c){c.setAttribute("aria-pressed",String(c===b));});update();});});
-function bezier(e,t){var x0=e.a.x+50,x3=e.b.x-106,x1=x0+(x3-x0)*.44,x2=x0+(x3-x0)*.64,y0=e.a.y,y1=y0,y2=e.b.y,y3=e.b.y,s=1-t;return {x:s*s*s*x0+3*s*s*t*x1+3*s*t*t*x2+t*t*t*x3,y:s*s*s*y0+3*s*s*t*y1+3*s*t*t*y2+t*t*t*y3};}
-var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var frame=0;function tick(){frame+=0.005;V.forEach(function(v){var p=bezier(v.e,(frame+v.i*0.14)%1);v.dot.setAttribute("cx",p.x);v.dot.setAttribute("cy",p.y);});requestAnimationFrame(tick);}if(!reduce)requestAnimationFrame(tick);
-var modal=document.getElementById("help"),close=document.getElementById("close-help");function help(show){modal.setAttribute("aria-hidden",String(!show));if(show)close.focus();}
-document.getElementById("show-help").addEventListener("click",function(){help(true);});close.addEventListener("click",function(){help(false);});modal.addEventListener("click",function(e){if(e.target===modal)help(false);});
-document.addEventListener("keydown",function(e){if(e.key==="?"){help(true);return;}if(e.key==="Escape"){help(false);return;}if("01234".indexOf(e.key)>=0&&e.key.length===1){setFilter(["all","systems","data","verify","research"][Number(e.key)]);return;}if(e.key==="ArrowLeft"||e.key==="ArrowRight"){var a=P.filter(vis),i=a.findIndex(function(p){return p.id===selected;}),offset=e.key==="ArrowRight"?1:-1;choose(a[(i+offset+a.length)%a.length].id);}});
+  <header class="site-header" id="top">
+    <div class="header-inner container">
+      <a href="#top" class="wordmark" aria-label="Yue Yu · Home">
+        <span class="wordmark-symbol" aria-hidden="true">Y<span class="symbol-dot">.</span></span>
+        <span class="wordmark-text">YUE YU <small>于越</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#work" data-i18n="navWork">Work</a>
+        <a href="#connections" data-i18n="navMap">Connections</a>
+        <a href="#about" data-i18n="navAbout">About</a>
+        <a href="#contact" data-i18n="navReach">Get in touch</a>
+      </nav>
+      <div class="header-actions">
+        <button class="search-trigger" id="search-open" type="button" aria-haspopup="dialog" aria-controls="command-dialog">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg>
+          <span data-i18n="search">Search</span><kbd>⌘K</kbd>
+        </button>
+        <div class="language-switch" role="group" aria-label="Language / 语言">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" aria-pressed="false">中</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-var currentLanguage="en",currentAudience="industry";
-var copy={
-en:{
-navExplore:"Explore",navWork:"Selected work",credentials:"Northeast Forestry University · Engineering Management undergraduate · Computer Science & Technology minor",headline1:"Things I build.",headline2:"Questions I explore.",crossline:"工程管理本科 × 计算机科学与技术辅修 · 软件系统、工程实践与可复现实验",
-lensPrompt:"Follow a thread",industry:"Building",research:"Exploring",atGlance:"A FEW THINGS I'VE MADE",schoolLabel:"EDUCATION",schoolFact:"Northeast Forestry University · Engineering Management + CS minor",productLabel:"SHIPPED PRODUCT",steamFact:"Steam demo ↗",validationLabel:"TEST EVIDENCE",zhixuFact:"120 backend + 33 frontend tests ↗",reproductionLabel:"REAL REPRODUCTION",scopeNote:"Some selected work, with source and notes for the curious.",exploreCta:"Explore the projects ↗",copyCta:"Copy bio",graphTitle:"Connections between projects",graphHint:"Select · drag · filter · press ? for shortcuts",
-workKicker:"SELECTED WORK / MY PROJECTS",workTitleA:"A few things",workTitleB:"I've made.",workNote:"Games, tools and experiments, each with its own story.",
-card1tag:"01 / PRODUCT DELIVERY",card1text:"Godot + Steam multiplayer, Workshop and save migration, with a playable demo and public engineering cases.",card1link:"Inspect the game ↗",
-card2tag:"02 / FULL-STACK SYSTEMS",card2text:"FastAPI, tenant isolation, RAG provenance and workflows. Dated verification: 120 backend and 33 frontend tests.",card2link:"Inspect source + tests ↗",
-card3tag:"03 / RELIABILITY RESEARCH",card3text:"PostgreSQL 16/17 pg-osc regression reproduction with independent SQL contract checks.",card3link:"Inspect real reproduction ↗",
-researchKicker:"ANOTHER SIDE OF MY WORK",researchTitle:"Always exploring.",researchCopy:"Alongside products, I explore databases, computational engineering and reproducible experiments. Sometimes the most useful result is learning why something didn't work.",
-industryDescription:"I like making things people can actually use, from games to knowledge systems and desktop tools. These connect to CardCraft, Zhixu and WiFiScope.",
-researchDescription:"I also enjoy chasing down tricky failures and computational questions. That has led to MigrationWitness, ReproShift and software for construction engineering.",copied:"Brief copied",copyFailed:"Clipboard unavailable"
-},
-zh:{
-navExplore:"交互探索",navWork:"代表项目",credentials:"东北林业大学 · 工程管理本科 · 辅修计算机科学与技术",headline1:"做出真正的系统。",headline2:"用证据验证结果。",crossline:"Engineering Management × Computer Science · 工程实践、软件系统与可复现研究",
-lensPrompt:"看看不同的方向",industry:"系统与产品",research:"实验与研究",atGlance:"一些正在做的事 / NOTES",schoolLabel:"教育背景",schoolFact:"东北林业大学 · 工程管理本科 + 计算机辅修",productLabel:"产品交付",steamFact:"Steam 可玩 Demo ↗",validationLabel:"测试验证",zhixuFact:"后端 120 项 + 前端 33 项测试 ↗",reproductionLabel:"真实实验",scopeNote:"一些公开的项目、Demo 和实验记录，可以顺着链接慢慢看。",exploreCta:"看看项目 ↗",copyCta:"复制简介",graphTitle:"项目之间的联系",graphHint:"点选 · 拖拽 · 筛选 · 按 ? 查看快捷键",
-workKicker:"一些作品",workTitleA:"做出来的，",workTitleB:"和想明白的。",workNote:"游戏、软件工具、实验和各种有趣的问题。",
-card1tag:"01 / 游戏与产品交付",card1text:"Godot 游戏，Steam 联机、创意工坊和存档迁移，公开 Demo 与工程案例可查。",card1link:"查看游戏与技术案例 ↗",
-card2tag:"02 / 后端与系统工程",card2text:"FastAPI、多租户隔离、RAG 来源溯源和工作流。公开记录：后端 120、前端 33 项测试。",card2link:"查看源码与测试 ↗",
-card3tag:"03 / 可靠性与可复现",card3text:"PostgreSQL 16/17 中 pg-osc 迁移回归的实证复现，包含独立 SQL 契约检查。",card3link:"查看真实复现实验 ↗",
-researchKicker:"还在探索",researchTitle:"好奇心没有边界。",researchCopy:"除了做产品，我也喜欢研究数据库、工程计算和可复现实验。有些实验并没有得到期待的结果，但一样值得留下。",
-industryDescription:"喜欢做真正能使用的东西，既有游戏，也有知识系统和桌面工具。这里有 CardCraft、Zhixu 和 WiFiScope。 ",
-researchDescription:"也爱研究系统为什么会出错，以及怎样把工程问题变成能复现的实验。比如 MigrationWitness、ReproShift 和工程造价软件。",copied:"简介已复制",copyFailed:"复制不可用"
-}
-};
-var zhProjects={
-cardcraft:{desc:"基于 Godot 的卡牌游戏系统，包含 Steam P2P、多人大堂、创意工坊和存档升级，并提供公开 Demo。",facts:["Steam Demo 和公开工程案例","联机房间生命周期与消息验证","创意工坊、存档兼容设计"]},
-zhixu:{desc:"自托管的多租户知识系统，涵盖检索来源、RAG 流程与版本化工作流。",facts:["FastAPI 服务与权限边界","混合检索及来源追踪","前后端验证文档"]},
-wifiscope:{desc:"本地优先网络调查工具，进行有边界的 TCP/TLS 检查、PCAP 证据整理和隐私保护。",facts:["Windows 便携发布包","Windows / Linux 测试工作流","授权范围与隐私限制"]},
-migrationwitness:{desc:"真实 PostgreSQL 迁移实验，以独立权限契约检查来验证应用行为，复现 pg-osc 问题。",facts:["实际复现 pg-osc 权限回归","独立 SQL 契约验证","PostgreSQL 16/17 实验记录"]},
-cost:{desc:"面向工程量计算、清单组价与开发评价的可复核计算引擎，明确 Decimal 精度和舍入规则。",facts:["工程量及组价计算","公开计价方法与假设","本地浏览器及 CLI 输出"]},
-reproshift:{desc:"研究历史 Python 依赖兼容性的可复现实验，保留版本、对照和实验局限。",facts:["可复现实验协议","历史依赖环境记录","实验范围与局限说明"]}
-};
-function refreshLocale(){
-document.documentElement.lang=currentLanguage==="zh"?"zh-CN":"en";
-document.querySelectorAll("[data-t]").forEach(function(n){var value=copy[currentLanguage][n.dataset.t];if(value)n.textContent=value;});
-document.querySelectorAll("[data-lang]").forEach(function(n){n.setAttribute("aria-pressed",String(n.dataset.lang===currentLanguage));});
-document.querySelectorAll("[data-audience]").forEach(function(n){n.setAttribute("aria-pressed",String(n.dataset.audience===currentAudience));});
-document.getElementById("lens-copy").textContent=copy[currentLanguage][currentAudience==="industry"?"industryDescription":"researchDescription"];
-choose(selected);
-}
-function changeAudience(audience){
-currentAudience=audience;
-refreshLocale();
-document.querySelectorAll("[data-project]").forEach(function(n){var id=n.dataset.project;n.style.order=audience==="industry"?(id==="cardcraft"?"0":id==="zhixu"?"1":"2"):(id==="migrationwitness"?"0":id==="zhixu"?"1":"2");});
-choose(audience==="industry"?"zhixu":"migrationwitness");
-}
-document.querySelectorAll("[data-lang]").forEach(function(n){n.addEventListener("click",function(){currentLanguage=n.dataset.lang;refreshLocale();});});
-document.querySelectorAll("[data-audience]").forEach(function(n){n.addEventListener("click",function(){changeAudience(n.dataset.audience);});});
-document.getElementById("copy-brief").addEventListener("click",async function(){
-var message=currentLanguage==="zh"?
-"于越，东北林业大学工程管理本科，辅修计算机科学与技术。关注软件系统、工程应用与可复现研究。项目包括：CardCraft Steam Demo；Zhixu FastAPI 多租户知识系统（2026-10-08 记录：后端120、前端33项测试）；MigrationWitness 在 PostgreSQL 16/17 上的迁移权限问题复现。公开证据：https://github.com/KaiserIIII":
-"Yue Yu, Northeast Forestry University. Engineering Management undergraduate, Computer Science and Technology minor. I build software systems and reproducible engineering artifacts. Evidence: CardCraft Steam demo; Zhixu FastAPI knowledge platform (2026-10-08 record: 120 backend + 33 frontend tests); MigrationWitness PostgreSQL 16/17 regression reproduction. Source: https://github.com/KaiserIIII";
-try{await navigator.clipboard.writeText(message);document.getElementById("copy-feedback").textContent=copy[currentLanguage].copied;}
-catch(error){document.getElementById("copy-feedback").textContent=copy[currentLanguage].copyFailed;}
-});
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="overline intro-reveal" data-i18n="eyebrow">A PERSONAL ENGINEERING NOTEBOOK / EST. IN CURIOSITY</p>
+        <h1 id="hero-title" class="intro-reveal"><span data-i18n="heroA">I like making things.</span><br><em data-i18n="heroB">And understanding them.</em></h1>
+        <p class="hero-lead intro-reveal" data-i18n="heroLead">I'm Yue Yu (于越), an Engineering Management undergraduate at Northeast Forestry University, minoring in Computer Science &amp; Technology.</p>
+        <p class="hero-secondary intro-reveal" data-i18n="heroSecond">Software, games, engineering tools and the occasional research rabbit hole.</p>
+        <div class="hero-buttons intro-reveal">
+          <a class="button button-primary" href="#work"><span data-i18n="discover">Explore the work</span><span aria-hidden="true">↗</span></a>
+          <a class="button button-quiet" href="https://github.com/KaiserIIII" target="_blank" rel="noopener noreferrer"><span data-i18n="viewGithub">Find me on GitHub</span><span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="scroll-hint intro-reveal"><span class="scroll-line" aria-hidden="true"></span><span data-i18n="scroll">SCROLL TO EXPLORE</span></p>
+      </div>
+      <div class="hero-art" id="hero-art" aria-hidden="true">
+        <div class="hero-art-label"><span>FIG. 001</span><span>YUE / NOTES</span></div>
+        <svg id="hero-orbit" viewBox="0 0 620 660" focusable="false" aria-hidden="true">
+          <defs>
+            <radialGradient id="orb-glow"><stop offset="0" stop-color="#e4beaa" stop-opacity=".55"/><stop offset="1" stop-color="#e4beaa" stop-opacity="0"/></radialGradient>
+            <linearGradient id="orb-fill" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#f4e7d9"/><stop offset=".54" stop-color="#e9d3c1"/><stop offset="1" stop-color="#d9b3a1"/>
+            </linearGradient>
+          </defs>
+          <circle cx="316" cy="317" r="258" fill="url(#orb-glow)"/>
+          <g class="hero-rings" fill="none" stroke="#b6a89a" stroke-width=".9">
+            <circle cx="316" cy="317" r="254" opacity=".46"/>
+            <circle cx="316" cy="317" r="206" opacity=".6"/>
+            <circle cx="316" cy="317" r="155" opacity=".7"/>
+            <circle cx="316" cy="317" r="104" opacity=".8"/>
+            <ellipse cx="316" cy="317" rx="252" ry="106" transform="rotate(-32 316 317)" opacity=".75"/>
+            <ellipse cx="316" cy="317" rx="253" ry="113" transform="rotate(56 316 317)" opacity=".5"/>
+          </g>
+          <g class="hero-diagrams" fill="none" stroke-width="1.5">
+            <path d="M102 185C210 150 395 430 530 425" stroke="#b77559" stroke-opacity=".82"/>
+            <path d="M148 476C320 514 320 150 503 163" stroke="#708aa2" stroke-opacity=".68"/>
+            <path d="M152 180C230 435 435 195 480 457" stroke="#788d7f" stroke-opacity=".53"/>
+          </g>
+          <circle cx="316" cy="317" r="73" fill="url(#orb-fill)" stroke="#d7b19f" stroke-width="1"/>
+          <circle cx="316" cy="317" r="58" fill="none" stroke="#f8eee4" opacity=".8" stroke-width="1"/>
+          <text x="316" y="328" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="42" fill="#6b483d">Y.</text>
+          <g class="hero-floating">
+            <circle cx="102" cy="185" r="6" fill="#b77559"/><circle cx="530" cy="425" r="6" fill="#b77559"/>
+            <circle cx="148" cy="476" r="5" fill="#708aa2"/><circle cx="503" cy="163" r="5" fill="#708aa2"/>
+            <circle cx="152" cy="180" r="4" fill="#788d7f"/>
+          </g>
+          <g class="hero-plot-point" id="hero-plot-point"><circle r="18" fill="#b77559" opacity=".12"/><circle r="5" fill="#b77559"/></g>
+          <text x="103" y="140" class="orbit-label">BUILD</text><text x="480" y="492" class="orbit-label">VERIFY</text>
+          <text x="398" y="102" class="orbit-label">EXPLORE</text>
+        </svg>
+        <div class="hero-art-footer"><span>AN OPEN-ENDED PROCESS</span><span>01 — ∞</span></div>
+      </div>
+    </section>
 
-changeAudience("industry");
-})();
-</script></body></html>
+    <div class="edition-strip" aria-hidden="true">
+      <div class="container edition-inner"><span data-i18n="edition">SELECTED WORK · 2026</span><span class="edition-flourish">✳</span><span>SOFTWARE / ENGINEERING / EXPERIMENTS</span><span class="edition-flourish">✳</span><span>YUE YU</span></div>
+    </div>
+
+    <section class="proof-section container section-space" id="proof" aria-labelledby="proof-title">
+      <div class="section-heading reveal"><p class="overline" data-i18n="proofKicker">THINGS THAT EXIST OUTSIDE THIS PAGE</p><h2 id="proof-title" class="serif-title" data-i18n="proofTitle">From an idea to something real.</h2></div>
+      <div class="proof-grid">
+        <a class="proof-item reveal" href="https://store.steampowered.com/app/4338300/" target="_blank" rel="noopener noreferrer">
+          <span class="proof-number">01</span><span class="proof-icon proof-icon-game" aria-hidden="true">◇</span>
+          <span class="proof-text"><strong data-i18n="proof1">A playable game</strong><small data-i18n="proof1Description">CardCraft on Steam</small><span class="proof-tag" data-i18n="tagDemo">STEAM / PLAYABLE</span></span><span class="proof-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="proof-item reveal" href="https://github.com/KaiserIIII/zhixu/blob/main/docs/verification.md" target="_blank" rel="noopener noreferrer">
+          <span class="proof-number">02</span><span class="proof-icon proof-icon-tests" aria-hidden="true">⌘</span>
+          <span class="proof-text"><strong data-i18n="proof2">A tested system</strong><small data-i18n="proof2Description">Zhixu · 120 backend + 33 frontend tests</small><span class="proof-tag" data-i18n="tagTests">DATED VERIFICATION</span></span><span class="proof-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="proof-item reveal" href="https://github.com/KaiserIIII/migrationwitness/blob/main/CROSS_VERSION_RESULTS.md" target="_blank" rel="noopener noreferrer">
+          <span class="proof-number">03</span><span class="proof-icon proof-icon-sql" aria-hidden="true">∑</span>
+          <span class="proof-text"><strong data-i18n="proof3">A reproduced failure</strong><small data-i18n="proof3Description">PostgreSQL 16/17 migration study</small><span class="proof-tag" data-i18n="tagPG">REAL POSTGRESQL</span></span><span class="proof-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="work-section section-space" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section-heading reveal"><p class="overline" data-i18n="workKicker">01 / SELECTED WORK</p>
+          <div class="heading-row"><h2 id="work-title" class="serif-title" data-i18n="workTitle">A few things I've built.</h2><a class="text-link" href="#archive"><span data-i18n="allProjects">All projects</span> ↗</a></div>
+          <p class="section-subtitle" data-i18n="workSubtitle">Different kinds of problems. The same habit of making them tangible.</p>
+        </div>
+        <div class="featured-grid">
+          <article class="feature feature-large reveal" data-feature="cardcraft">
+            <div class="feature-visual feature-visual-cards" aria-hidden="true">
+              <span class="feature-visual-index">01 / FIELD NOTES</span>
+              <div class="playing-card playing-card-a"><span>♠</span><strong>01</strong><small>BUILD</small></div>
+              <div class="playing-card playing-card-b"><span>✳</span><strong>02</strong><small>PLAY</small></div>
+              <div class="playing-card playing-card-c"><span>◇</span><strong>03</strong><small>SHIP</small></div>
+              <span class="feature-visual-bottom">GAME SYSTEMS — REIMAGINED</span>
+            </div>
+            <div class="feature-body"><div class="feature-meta"><span>01 / GODOT · STEAM</span><span>◯ 01</span></div>
+              <h3>CardCraft <span>Engineering</span></h3>
+              <p data-feature-desc="cardcraft">A card game where networking, persistence and Workshop content are part of the engineering.</p>
+              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-project="cardcraft"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://store.steampowered.com/app/4338300/" target="_blank" rel="noopener noreferrer" class="feature-external">Steam ↗</a></div>
+            </div>
+          </article>
+          <article class="feature feature-small reveal" data-feature="zhixu">
+            <div class="feature-visual feature-visual-network" aria-hidden="true">
+              <span class="feature-visual-index">02 / DATA SYSTEMS</span>
+              <svg viewBox="0 0 490 310" class="network-art"><path d="M76 155L192 67L320 113L409 51M76 155L204 243L320 113L414 224M192 67L204 243M409 51L414 224" fill="none" stroke="#a69e91" stroke-width="1.4"/><circle cx="76" cy="155" r="16" fill="#ba765b"/><circle cx="192" cy="67" r="9" fill="#768a7d"/><circle cx="204" cy="243" r="13" fill="#708aa2"/><circle cx="320" cy="113" r="30" fill="#d5b6a2"/><circle cx="409" cy="51" r="9" fill="#ba765b"/><circle cx="414" cy="224" r="12" fill="#768a7d"/><circle cx="320" cy="113" r="8" fill="#f9f3eb"/></svg>
+              <span class="feature-visual-bottom">CONTEXT → RETRIEVAL → EVIDENCE</span>
+            </div>
+            <div class="feature-body"><div class="feature-meta"><span>02 / FASTAPI · RAG</span><span>◯ 02</span></div>
+              <h3>Zhixu <span>/ 知序</span></h3>
+              <p data-feature-desc="zhixu">A self-hosted knowledge system with tenant boundaries, evidence-linked retrieval and workflows.</p>
+              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-project="zhixu"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://github.com/KaiserIIII/zhixu" target="_blank" rel="noopener noreferrer" class="feature-external">Source ↗</a></div>
+            </div>
+          </article>
+          <article class="feature feature-small reveal" data-feature="migrationwitness">
+            <div class="feature-visual feature-visual-sql" aria-hidden="true">
+              <span class="feature-visual-index">03 / RELIABILITY STUDY · SQL ILLUSTRATION</span>
+              <div class="code-art"><div><i>01</i><span>BEGIN;</span></div><div><i>02</i><span>ALTER TABLE <em>events</em> ADD COLUMN flag bool;</span></div><div><i>03</i><span>SELECT <em>has_table_privilege(...)</em>;</span></div><div><i>04</i><span class="code-warn">-- COMPARE AGAINST CONTRACT</span></div><div><i>05</i><span>ROLLBACK;</span></div></div>
+              <span class="feature-visual-bottom">THE STATUS IS NOT THE TRUTH</span>
+            </div>
+            <div class="feature-body"><div class="feature-meta"><span>03 / POSTGRESQL</span><span>◯ 03</span></div>
+              <h3>Migration<span>Witness</span></h3>
+              <p data-feature-desc="migrationwitness">A database migration can report success while silently breaking an application contract.</p>
+              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-project="migrationwitness"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://github.com/KaiserIIII/migrationwitness" target="_blank" rel="noopener noreferrer" class="feature-external">Source ↗</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="map-section section-space" id="connections" aria-labelledby="map-title">
+      <div class="container">
+        <div class="section-heading reveal"><p class="overline" data-i18n="mapKicker">02 / AN EXPERIMENT</p><h2 id="map-title" class="serif-title" data-i18n="mapTitle">Follow the connections.</h2><p class="section-subtitle" data-i18n="mapSubtitle">Drag a project, change the lens, or select a node. Different fields often share the same engineering questions.</p></div>
+        <div class="graph-shell reveal">
+          <div class="graph-main">
+            <div class="graph-toolbar"><span class="graph-eyebrow"><span class="graph-live-dot"></span><span data-i18n="connections">Connections</span><span class="graph-version">/ 001</span></span><button type="button" class="reset-button" id="map-reset"><span aria-hidden="true">↺</span><span data-i18n="reset">Reset layout</span></button></div>
+            <div class="graph-frame" id="graph-frame">
+              <svg id="relationship-graph" viewBox="0 0 920 670" role="img" tabindex="0" aria-labelledby="graph-svg-title graph-svg-desc">
+                <title id="graph-svg-title">Project relationships</title><desc id="graph-svg-desc">An interactive graph connecting four engineering disciplines with ten public projects. Select nodes or drag project cards.</desc>
+                <defs><pattern id="graph-grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" fill="none" stroke="#d6cec3" stroke-opacity=".3" stroke-width=".7"/></pattern></defs>
+                <rect width="920" height="670" fill="url(#graph-grid)" opacity=".38"></rect>
+                <g id="graph-links" aria-hidden="true"></g><g id="graph-particles" aria-hidden="true"></g><g id="graph-nodes"></g>
+              </svg>
+            </div>
+            <div class="graph-bottom">
+              <span data-i18n="mapHint">Select or drag a node · use arrow keys to explore</span>
+              <span data-i18n="mapDrag">DRAG TO REARRANGE</span>
+            </div>
+          </div>
+          <aside class="graph-inspector" id="graph-inspector" aria-live="polite" aria-atomic="false">
+            <div class="inspector-top"><span id="inspector-index">PROJECT / 02</span><span class="inspector-asterisk">✳</span></div>
+            <div class="inspector-main">
+              <p class="overline" id="inspector-tag">KNOWLEDGE / PLATFORM</p>
+              <h3 id="inspector-title">Zhixu / 知序</h3>
+              <p id="inspector-story">A self-hosted knowledge system with tenant boundaries, evidence-linked retrieval and workflows.</p>
+              <div class="inspector-rule"></div>
+              <p class="inspector-label" data-i18n="focus">THE QUESTION</p><p id="inspector-focus"></p>
+              <p class="inspector-label" data-i18n="evidence">EVIDENCE YOU CAN OPEN</p>
+              <div id="inspector-evidence" class="inspector-evidence"></div>
+              <details class="inspector-limit"><summary data-i18n="limitations">WHAT IT DOESN'T CLAIM</summary><p id="inspector-limit"></p></details>
+            </div>
+            <div class="inspector-footer"><button class="round-button" id="project-prev" type="button" aria-label="Previous project">←</button><button class="round-button" id="project-next" type="button" aria-label="Next project">→</button><a id="inspector-source" href="https://github.com/KaiserIIII/zhixu" target="_blank" rel="noopener noreferrer"><span data-i18n="openSource">Open the project</span> ↗</a></div>
+          </aside>
+        </div>
+        <div class="graph-filters" id="map-filters" role="group" aria-label="Filter projects by discipline">
+          <button type="button" data-map-filter="all" aria-pressed="true" data-i18n="all">All</button>
+          <button type="button" data-map-filter="systems" aria-pressed="false">Systems</button>
+          <button type="button" data-map-filter="data" aria-pressed="false">Data &amp; protocols</button>
+          <button type="button" data-map-filter="verification" aria-pressed="false">Verification</button>
+          <button type="button" data-map-filter="research" aria-pressed="false">Research</button>
+          <span class="graph-note" data-i18n="provenance">Public project links only. Scope matters.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="archive-section section-space container" id="archive" aria-labelledby="archive-title">
+      <div class="section-heading reveal"><p class="overline" data-i18n="archiveKicker">03 / THE ARCHIVE</p><h2 class="serif-title" id="archive-title" data-i18n="archiveTitle">More than the highlights.</h2><p class="section-subtitle" data-i18n="archiveSubtitle">A compact index of projects, experiments and open questions.</p></div>
+      <div class="archive-controls reveal">
+        <label class="archive-search" for="archive-query"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg><input id="archive-query" type="search" autocomplete="off" placeholder="Find a project, language, or topic" data-i18n-placeholder="searchPlaceholder"></label>
+        <div class="archive-chips" role="group" aria-label="Filter archive">
+          <button type="button" data-archive-filter="all" aria-pressed="true" data-i18n="all">All</button>
+          <button type="button" data-archive-filter="product" aria-pressed="false" data-i18n="product">Products</button>
+          <button type="button" data-archive-filter="systems" aria-pressed="false" data-i18n="systems">Systems</button>
+          <button type="button" data-archive-filter="research" aria-pressed="false" data-i18n="research">Research</button>
+        </div>
+      </div>
+      <div class="archive-count" role="status"><span data-i18n="count">PROJECTS IN VIEW</span><strong id="archive-count">10</strong></div>
+      <div class="archive-list" id="archive-list"></div>
+      <p class="archive-empty" id="archive-empty" hidden data-i18n="noMatches">No projects match. Try a broader term.</p>
+    </section>
+
+    <section class="about-section section-space" id="about" aria-labelledby="about-title">
+      <div class="container about-layout">
+        <div class="about-art reveal" aria-hidden="true">
+          <div class="about-art-inner"><span>001</span><div class="about-art-type">Make.<br><em>Break.</em><br>Learn.</div><div class="about-art-seal"><span>YUE</span><small>∞</small></div><div class="about-art-bottom">UNFINISHED BY DESIGN</div></div>
+        </div>
+        <div class="about-copy reveal"><p class="overline" data-i18n="aboutKicker">04 / A LITTLE ABOUT ME</p><h2 class="serif-title" id="about-title" data-i18n="aboutTitle">Between disciplines.</h2><p data-i18n="aboutA">Engineering management taught me to care about constraints, quantities and real environments. Computer science gave me new ways to turn those problems into systems.</p><p data-i18n="aboutB">I learn by shipping tools, studying failures and preserving the evidence — even when it contradicts the original idea.</p>
+          <div class="about-attributes"><div><small data-i18n="aboutLabel1">STUDY</small><strong data-i18n="aboutVal1">Northeast Forestry University</strong></div><div><small data-i18n="aboutLabel2">FOCUS</small><strong data-i18n="aboutVal2">Systems · Data · Applied Research</strong></div></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" id="contact">
+      <div class="container footer-inner">
+        <p class="overline">LAST PAGE / AN OPEN INVITATION</p>
+        <h2 class="footer-title" data-i18n="contactTitle">Have a question, an idea, or something interesting?</h2>
+        <p data-i18n="contactCopy">I'm always happy to talk about software, engineering and unusual technical problems.</p>
+        <div class="footer-actions"><a class="button button-primary" href="mailto:hello@kaiseriii.me"><span data-i18n="contactButton">Say hello</span><span aria-hidden="true">↗</span></a><a class="button button-quiet" href="https://github.com/KaiserIIII" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceButton">Browse GitHub</span><span aria-hidden="true">↗</span></a></div>
+        <div class="footer-meta"><span>© 2026 YUE YU / 于越</span><span data-i18n="footerNote">Built with curiosity, not a template.</span><a href="#top">BACK TO TOP ↑</a></div>
+      </div>
+    </footer>
+  </main>
+
+  <dialog id="command-dialog" class="command-dialog" aria-labelledby="command-title">
+    <div class="command-head"><p id="command-title" data-i18n="commandTitle">Jump to a project</p><button type="button" id="command-close" aria-label="Close search">✕</button></div>
+    <label class="command-input-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg><input id="command-input" type="search" autocomplete="off" data-i18n-placeholder="commandHint" placeholder="Type a project or a technology"></label>
+    <div id="command-results" class="command-results" role="listbox" aria-label="Project results"></div>
+    <div class="command-foot"><span data-i18n="commandHelp">↑ ↓ Navigate · Enter Open · Esc Close</span><span>KAISER / SEARCH</span></div>
+  </dialog>
+  <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
+</body>
+</html>
