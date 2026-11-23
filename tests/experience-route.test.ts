@@ -8,6 +8,7 @@ describe('public portfolio atelier', () => {
   const css=readFileSync(resolve(root,'styles.css'),'utf8');
   const data=readFileSync(resolve(root,'data.js'),'utf8');
   const app=readFileSync(resolve(root,'app.js'),'utf8');
+  const searchEngine=readFileSync(resolve(root,'search-engine.js'),'utf8');
   const comparison=readFileSync(resolve(root,'compare.js'),'utf8');
   const journey=readFileSync(resolve(root,'journey.js'),'utf8');
   const lab=readFileSync(resolve(root,'lab-ui.js'),'utf8');
@@ -30,6 +31,12 @@ describe('public portfolio atelier', () => {
     expect(css).toContain('prefers-reduced-motion');
     expect(app).toContain('setPointerCapture');
     expect(app).toContain('renderCommandResults');
+    expect(html).toContain('src="./search-engine.js"');
+    expect(html).toContain('id="command-preview"');
+    expect(html).toContain('id="command-evidence-link"');
+    expect(searchEngine).toContain('conceptDefinitions');
+    expect(searchEngine).toContain('function inspect(');
+    expect(app).toContain('searchEngine.inspect(query,data.projects,locale');
     expect(html).toContain('id="compare-studio"');
     expect(html).toContain('id="mobile-project-index"');
     expect(html).toContain('src="./compare.js"');
