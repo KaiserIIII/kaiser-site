@@ -9,6 +9,8 @@ describe('public portfolio atelier', () => {
   const data=readFileSync(resolve(root,'data.js'),'utf8');
   const app=readFileSync(resolve(root,'app.js'),'utf8');
   const comparison=readFileSync(resolve(root,'compare.js'),'utf8');
+  const lab=readFileSync(resolve(root,'lab-ui.js'),'utf8');
+  const labEngine=readFileSync(resolve(root,'lab-engine.js'),'utf8');
   const cases=readFileSync(resolve(root,'casebook.js'),'utf8');
   const blueprints=readFileSync(resolve(root,'blueprints.js'),'utf8');
   it('publishes a dependency-free interactive route', () => {
@@ -31,6 +33,13 @@ describe('public portfolio atelier', () => {
     expect(html).toContain('id="mobile-project-index"');
     expect(html).toContain('src="./compare.js"');
     expect(comparison).toContain('data.domains.filter');
+    expect(html).toContain('id="lab-workbench"');
+    expect(html).toContain('src="./lab-engine.js"');
+    expect(html).toContain('src="./lab-ui.js"');
+    expect(lab).toContain('selectMode');
+    expect(lab).toContain('renderTrace');
+    expect(labEngine).toContain('function permission(');
+    expect(labEngine).toContain('function retrieval(');
     expect(comparison).toContain('popstate');
     expect(app).toContain('updateMobileIndex');
   });
