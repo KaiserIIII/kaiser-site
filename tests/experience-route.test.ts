@@ -8,6 +8,8 @@ describe('public portfolio atelier', () => {
   const css=readFileSync(resolve(root,'styles.css'),'utf8');
   const data=readFileSync(resolve(root,'data.js'),'utf8');
   const app=readFileSync(resolve(root,'app.js'),'utf8');
+  const cases=readFileSync(resolve(root,'casebook.js'),'utf8');
+  const blueprints=readFileSync(resolve(root,'blueprints.js'),'utf8');
   it('publishes a dependency-free interactive route', () => {
     expect(existsSync(resolve(root,'favicon.svg'))).toBe(true);
     expect(existsSync(resolve(root,'cover.svg'))).toBe(true);
@@ -15,6 +17,12 @@ describe('public portfolio atelier', () => {
     expect(html).toContain('id="command-dialog"');
     expect(html).toContain('src="./data.js"');
     expect(html).toContain('src="./app.js"');
+    expect(html).toContain('src="./blueprints.js"');
+    expect(html).toContain('src="./casebook.js"');
+    expect(html).toContain('id="casebook-dialog"');
+    expect(blueprints).toContain('migrationwitness');
+    expect(cases).toContain('showModal');
+    expect(cases).toContain('popstate');
     expect(css).toContain('prefers-reduced-motion');
     expect(app).toContain('setPointerCapture');
     expect(app).toContain('renderCommandResults');

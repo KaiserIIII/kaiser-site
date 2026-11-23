@@ -300,3 +300,146 @@ body.js .reveal.is-visible{opacity:1;transform:none}
   body.js .intro-reveal,body.js .reveal{opacity:1!important;transform:none!important}
   .hero-art svg{transform:none!important}
 }
+
+
+/* V6 / The inspectable system: a focused and source-linked project deep dive. */
+:root{--casebook-accent:#b77559}
+.inspector-blueprint-button{
+  display:inline-flex;gap:7px;align-items:center;border:1px solid #d1c1b1;border-radius:8px;
+  color:var(--terra-deep);background:#f7f0e9;font-size:11px;font-weight:750;
+  padding:8px 10px;max-width:145px;line-height:1.2;text-align:left;
+  transition:background .2s,border-color .2s
+}
+.inspector-blueprint-button:hover{background:#efe0d0;border-color:#bba38d}
+.inspector-blueprint-button span:first-child{font:23px/.8 var(--serif)}
+.casebook-dialog{
+  margin:auto;inset:0;border:1px solid #cdb9a4;border-radius:19px;
+  padding:0;width:min(1260px,calc(100% - 46px));max-width:1260px;
+  max-height:min(95dvh,1090px);color:var(--ink);
+  background:var(--card);box-shadow:0 45px 110px #281c143d;
+  overscroll-behavior:contain;scrollbar-color:#c1b3a5 #f4eee7
+}
+.casebook-dialog::backdrop{background:#231b16a1;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.casebook-shell{padding:0 47px 37px}
+.casebook-topbar{
+  display:flex;align-items:center;justify-content:space-between;min-height:67px;gap:16px;
+  border-bottom:1px solid var(--line)
+}
+.casebook-brand{font:720 10px var(--mono);letter-spacing:1.2px;color:#86786a}
+.casebook-star{font:23px var(--serif);color:var(--casebook-accent);vertical-align:middle;padding-inline:9px}
+.casebook-close{display:inline-flex;align-items:center;gap:15px;border:0;background:transparent;color:var(--ink);font-size:12px;font-weight:700;padding:8px}
+.casebook-close span:last-child{width:27px;height:27px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font:19px var(--sans);background:#f4eee6}
+.casebook-close:hover span:last-child{background:#e8d7c6}
+.casebook-intro{padding:38px 0 29px}
+.casebook-heading{display:flex;align-items:end;justify-content:space-between;gap:20px}
+.casebook-heading h2{font:500 clamp(39px,4.4vw,67px)/1.09 var(--serif);letter-spacing:-2.6px;margin:10px 0 0}
+.casebook-intro>p:last-child{font-size:15px;line-height:1.8;max-width:830px;color:#665c52;margin:14px 0 0}
+.casebook-sharing{display:flex;align-items:center;gap:10px;flex-shrink:0;margin-bottom:6px}
+.casebook-link-button{border-bottom:1px solid var(--casebook-accent);border-left:0;border-right:0;border-top:0;background:transparent;color:var(--ink);padding:6px 0;font-size:12px;font-weight:720}
+.casebook-link-button:hover{color:var(--casebook-accent)}
+#casebook-share-status{font:600 11px var(--mono);color:var(--sage)}
+.casebook-stage{border:1px solid var(--line);border-radius:13px;background:#fffdfa;overflow:hidden}
+.casebook-stage-head{padding:18px 26px;display:flex;align-items:center;justify-content:space-between;gap:13px;border-bottom:1px solid var(--line-light);font:720 10px var(--mono);letter-spacing:1.1px;color:#978577}
+#casebook-step-count{color:var(--casebook-accent)}
+.casebook-graphic-viewport{padding:14px 17px 0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+#casebook-graphic{display:block;width:100%;height:auto;min-width:580px;max-height:255px;overflow:visible}
+.casebook-svg-node{cursor:pointer}
+.casebook-svg-node:focus-visible{outline:0;filter:drop-shadow(0 0 5px #ad795d)}
+.casebook-svg-node circle{transition:fill-opacity .25s,stroke .25s,stroke-width .25s}
+.casebook-svg-node text{user-select:none;pointer-events:none;font-family:var(--sans)}
+.casebook-connection{transition:stroke-opacity .25s}
+.casebook-connection.is-current{stroke-dasharray:7 8;animation:caseflow 13s linear infinite}
+@keyframes caseflow{to{stroke-dashoffset:-180}}
+.casebook-stage-buttons{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:0 23px 22px}
+.casebook-stage-pill{
+  display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:#f7f4ef;
+  padding:11px 12px;border-radius:8px;color:#796e62;font-size:12px;font-weight:620;min-width:0;
+  transition:background .2s,color .2s,border-color .2s
+}
+.casebook-stage-pill:hover{border-color:#af9c87}
+.casebook-stage-pill[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fffdfa}
+.casebook-pill-index{font:720 10px var(--mono);color:var(--casebook-accent)}
+.casebook-stage-pill[aria-pressed=true] .casebook-pill-index{color:#eabca4}
+.casebook-stage-reading{display:grid;grid-template-columns:.9fr 1.1fr;gap:35px;padding:26px;border-top:1px solid var(--line-light)}
+.casebook-reading-label{font:730 10px var(--mono);letter-spacing:.7px;color:#9a8777}
+.casebook-quote{padding-right:15px}
+.casebook-quote blockquote{font:italic 500 clamp(23px,2.5vw,33px)/1.3 var(--serif);margin:13px 0 3px;letter-spacing:-.6px;color:var(--casebook-accent)}
+.casebook-explainer{padding-left:30px;border-left:1px solid var(--line)}
+.casebook-explainer h3{margin:11px 0 8px;font:500 26px/1.1 var(--serif)}
+.casebook-explainer p{margin:0;color:#6b6157;font-size:13px;line-height:1.8;max-width:550px}
+.casebook-foot{display:flex;justify-content:space-between;align-items:end;gap:25px;padding-top:23px}
+#casebook-disclaimer{font-size:11px;color:#958779;line-height:1.7;max-width:475px;margin:0}
+.casebook-foot-links{display:flex;align-items:end;flex-direction:column;gap:8px;text-align:right}
+.casebook-links-label{font:730 10px var(--mono);color:#907c6a;letter-spacing:.7px}
+#casebook-links{display:flex;flex-wrap:wrap;gap:17px;justify-content:flex-end}
+#casebook-links a{font-size:12px;font-weight:700;color:var(--terra-deep);text-decoration:none;border-bottom:1px solid #d6aa95;padding-bottom:4px}
+#casebook-links a:hover{color:var(--ink)}
+@media(max-width:940px){
+  .casebook-dialog{width:min(920px,calc(100% - 28px));max-height:94dvh}
+  .casebook-shell{padding:0 27px 27px}
+  .casebook-stage-buttons{padding:0 17px 17px;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+  .casebook-stage-pill{padding:9px 6px;flex-direction:column;align-items:start;gap:7px;font-size:11px}
+  .casebook-stage-reading{gap:15px}.casebook-explainer{padding-left:18px}
+}
+@media(max-width:660px){
+  .inspector-blueprint-button{max-width:none;flex:1;min-height:40px}
+  .casebook-dialog{width:calc(100% - 14px);max-height:95dvh;border-radius:12px}
+  .casebook-shell{padding:0 16px 23px}
+  .casebook-topbar{min-height:54px}.casebook-brand{font-size:8px;letter-spacing:.6px}
+  .casebook-star{padding-inline:4px;font-size:19px}
+  .casebook-close{gap:6px;font-size:11px}
+  .casebook-intro{padding:26px 0 21px}
+  .casebook-heading{align-items:start;flex-direction:column;gap:11px}
+  .casebook-heading h2{font-size:39px;letter-spacing:-1.3px}
+  .casebook-intro>p:last-child{font-size:13px;margin-top:12px}
+  .casebook-stage-head{padding:12px 14px;font-size:9px}
+  .casebook-graphic-viewport{padding:8px 8px 0}
+  #casebook-graphic{min-width:610px}
+  .casebook-stage-buttons{display:flex;overflow-x:auto;padding:0 10px 14px;gap:7px;scrollbar-width:thin}
+  .casebook-stage-pill{min-width:111px;flex-direction:row;padding:9px;font-size:10px;align-items:center}
+  .casebook-stage-reading{grid-template-columns:1fr;padding:18px 16px;gap:16px}
+  .casebook-quote blockquote{font-size:25px}.casebook-explainer{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:16px}
+  .casebook-explainer h3{font-size:24px}.casebook-explainer p{font-size:13px}
+  .casebook-foot{align-items:start;flex-direction:column;gap:18px}
+  .casebook-foot-links{align-items:start;text-align:left}#casebook-links{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  .casebook-connection.is-current{animation:none}
+  .casebook-svg-node circle{transition:none}
+}
+
+
+/* A11y pass: legibility on warm paper is a product requirement, not a visual compromise.
+   Ordinary small text stays at/above the WCAG 2.2 AA 4.5:1 target. Decorative artwork keeps the softer palette. */
+:root{
+  --muted:#695e54;
+  --faint:#706257;
+  --terra-deep:#8d4937;
+}
+.overline,.feature-visual-index,.feature-visual-bottom,
+.archive-row-name small,.graph-bottom span:last-child{color:var(--terra-deep)}
+.wordmark-text small,.search-trigger,.search-trigger kbd,
+.scroll-hint,.edition-inner,.proof-number,.feature-meta,.feature-external,
+.graph-version,.graph-bottom,.graph-eyebrow,.inspector-label,
+.archive-row-index,.archive-count,.archive-tech span,
+.about-attributes small,.about-art-bottom,.about-art-inner>span,
+.about-art-seal,.footer-meta,.command-foot,
+.casebook-brand,.casebook-stage-head,.casebook-reading-label,
+#casebook-disclaimer,.casebook-links-label,.graph-note{
+  color:#66584f
+}
+.footer-meta,.footer-meta a{color:#5e5047}
+.feature-visual-index,.feature-visual-bottom{color:#5f5046}
+.hero-art-label,.hero-art-footer{color:#68594e}
+.graph-filters button,.archive-chips button,.casebook-stage-pill{color:#66594f}
+.casebook-quote blockquote{color:#8d4937}
+.casebook-pill-index,#casebook-step-count{color:#8d4937}
+.casebook-stage-pill[aria-pressed=true] .casebook-pill-index{color:#ffd1b6}
+
+/* Follow-up axe findings: inspector index, disclosure summary, and footer copy. */
+#inspector-index,.inspector-top{color:#8d4937}
+.inspector-limit summary{color:#5b5046}
+.footer-inner>p:not(.overline){color:#5e5047}
+
+/* Casebook navigation remains reachable while its long story scrolls. */
+.casebook-topbar{position:sticky;top:0;z-index:3;background:var(--card)}

@@ -17,7 +17,9 @@
   <link rel="canonical" href="https://kaiseriiii.github.io/KaiserIIII/">
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./data.js"></script>
+  <script defer src="./blueprints.js"></script>
   <script defer src="./app.js"></script>
+  <script defer src="./casebook.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -140,7 +142,7 @@
             <div class="feature-body"><div class="feature-meta"><span>01 / GODOT · STEAM</span><span>◯ 01</span></div>
               <h3>CardCraft <span>Engineering</span></h3>
               <p data-feature-desc="cardcraft">A card game where networking, persistence and Workshop content are part of the engineering.</p>
-              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-project="cardcraft"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://store.steampowered.com/app/4338300/" target="_blank" rel="noopener noreferrer" class="feature-external">Steam ↗</a></div>
+              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-case="cardcraft"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://store.steampowered.com/app/4338300/" target="_blank" rel="noopener noreferrer" class="feature-external">Steam ↗</a></div>
             </div>
           </article>
           <article class="feature feature-small reveal" data-feature="zhixu">
@@ -152,7 +154,7 @@
             <div class="feature-body"><div class="feature-meta"><span>02 / FASTAPI · RAG</span><span>◯ 02</span></div>
               <h3>Zhixu <span>/ 知序</span></h3>
               <p data-feature-desc="zhixu">A self-hosted knowledge system with tenant boundaries, evidence-linked retrieval and workflows.</p>
-              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-project="zhixu"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://github.com/KaiserIIII/zhixu" target="_blank" rel="noopener noreferrer" class="feature-external">Source ↗</a></div>
+              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-case="zhixu"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://github.com/KaiserIIII/zhixu" target="_blank" rel="noopener noreferrer" class="feature-external">Source ↗</a></div>
             </div>
           </article>
           <article class="feature feature-small reveal" data-feature="migrationwitness">
@@ -164,7 +166,7 @@
             <div class="feature-body"><div class="feature-meta"><span>03 / POSTGRESQL</span><span>◯ 03</span></div>
               <h3>Migration<span>Witness</span></h3>
               <p data-feature-desc="migrationwitness">A database migration can report success while silently breaking an application contract.</p>
-              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-project="migrationwitness"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://github.com/KaiserIIII/migrationwitness" target="_blank" rel="noopener noreferrer" class="feature-external">Source ↗</a></div>
+              <div class="feature-bottom"><button type="button" class="feature-detail" data-open-case="migrationwitness"><span data-i18n="exploreProject">Explore case</span><span aria-hidden="true">↗</span></button><a href="https://github.com/KaiserIIII/migrationwitness" target="_blank" rel="noopener noreferrer" class="feature-external">Source ↗</a></div>
             </div>
           </article>
         </div>
@@ -178,7 +180,7 @@
           <div class="graph-main">
             <div class="graph-toolbar"><span class="graph-eyebrow"><span class="graph-live-dot"></span><span data-i18n="connections">Connections</span><span class="graph-version">/ 001</span></span><button type="button" class="reset-button" id="map-reset"><span aria-hidden="true">↺</span><span data-i18n="reset">Reset layout</span></button></div>
             <div class="graph-frame" id="graph-frame">
-              <svg id="relationship-graph" viewBox="0 0 920 670" role="img" tabindex="0" aria-labelledby="graph-svg-title graph-svg-desc">
+              <svg id="relationship-graph" viewBox="0 0 920 670" role="group" aria-labelledby="graph-svg-title graph-svg-desc">
                 <title id="graph-svg-title">Project relationships</title><desc id="graph-svg-desc">An interactive graph connecting four engineering disciplines with ten public projects. Select nodes or drag project cards.</desc>
                 <defs><pattern id="graph-grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" fill="none" stroke="#d6cec3" stroke-opacity=".3" stroke-width=".7"/></pattern></defs>
                 <rect width="920" height="670" fill="url(#graph-grid)" opacity=".38"></rect>
@@ -202,7 +204,7 @@
               <div id="inspector-evidence" class="inspector-evidence"></div>
               <details class="inspector-limit"><summary data-i18n="limitations">WHAT IT DOESN'T CLAIM</summary><p id="inspector-limit"></p></details>
             </div>
-            <div class="inspector-footer"><button class="round-button" id="project-prev" type="button" aria-label="Previous project">←</button><button class="round-button" id="project-next" type="button" aria-label="Next project">→</button><a id="inspector-source" href="https://github.com/KaiserIIII/zhixu" target="_blank" rel="noopener noreferrer"><span data-i18n="openSource">Open the project</span> ↗</a></div>
+            <div class="inspector-footer"><button type="button" class="inspector-blueprint-button" id="casebook-from-inspector" aria-haspopup="dialog" aria-controls="casebook-dialog"><span>✳</span><span data-i18n="viewBlueprint">Open system blueprint</span></button><button class="round-button" id="project-prev" type="button" aria-label="Previous project">←</button><button class="round-button" id="project-next" type="button" aria-label="Next project">→</button><a id="inspector-source" href="https://github.com/KaiserIIII/zhixu" target="_blank" rel="noopener noreferrer"><span data-i18n="openSource">Open the project</span> ↗</a></div>
           </aside>
         </div>
         <div class="graph-filters" id="map-filters" role="group" aria-label="Filter projects by discipline">
@@ -261,5 +263,48 @@
     <div class="command-foot"><span data-i18n="commandHelp">↑ ↓ Navigate · Enter Open · Esc Close</span><span>KAISER / SEARCH</span></div>
   </dialog>
   <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
+  <dialog id="casebook-dialog" class="casebook-dialog" aria-labelledby="casebook-title" aria-describedby="casebook-lead">
+    <div class="casebook-shell">
+      <div class="casebook-topbar">
+        <span class="casebook-brand">YUE YU <span class="casebook-star">✳</span> <span data-i18n="blueprintLabel">SYSTEM BLUEPRINT / 系统剖面</span></span>
+        <button type="button" id="casebook-close" class="casebook-close" aria-label="Close system blueprint"><span data-i18n="closeBlueprint">Close</span> <span aria-hidden="true">×</span></button>
+      </div>
+      <div class="casebook-intro">
+        <p class="overline" id="casebook-kicker">SYSTEM / CASE STUDY</p>
+        <div class="casebook-heading">
+          <h2 id="casebook-title">Zhixu / 知序</h2>
+          <div class="casebook-sharing">
+            <button type="button" id="casebook-share" class="casebook-link-button"><span data-i18n="shareBlueprint">Copy a link</span> <span aria-hidden="true">↗</span></button>
+            <span id="casebook-share-status" role="status"></span>
+          </div>
+        </div>
+        <p id="casebook-lead">An interactive engineering sketch.</p>
+      </div>
+      <div class="casebook-stage" aria-label="Interactive engineering system stages">
+        <div class="casebook-stage-head">
+          <span data-i18n="blueprintSteps">EXPLORE THE PROCESS</span>
+          <span id="casebook-step-count">01 / 05</span>
+        </div>
+        <div class="casebook-graphic-viewport">
+          <svg id="casebook-graphic" viewBox="0 0 1060 266" role="img" aria-label="Clickable process diagram">
+            <defs>
+              <linearGradient id="casebook-wash" x1="0" x2="1"><stop offset="0" stop-color="#f3e9dc"/><stop offset="1" stop-color="#eef0ec"/></linearGradient>
+            </defs>
+            <rect x="12" y="12" width="1036" height="242" rx="16" fill="url(#casebook-wash)"/>
+            <g id="casebook-lines"></g><g id="casebook-nodes"></g>
+          </svg>
+        </div>
+        <div id="casebook-stage-buttons" class="casebook-stage-buttons" role="group" aria-label="Choose a process stage"></div>
+        <div class="casebook-stage-reading" aria-live="polite">
+          <div class="casebook-quote"><span class="casebook-reading-label" data-i18n="blueprintQuestion">THE QUESTION</span><blockquote id="casebook-question"></blockquote></div>
+          <div class="casebook-explainer"><span class="casebook-reading-label" data-i18n="blueprintDecision">ENGINEERING DECISION</span><h3 id="casebook-stage-name"></h3><p id="casebook-detail"></p></div>
+        </div>
+      </div>
+      <div class="casebook-foot">
+        <p id="casebook-disclaimer">A conceptual illustration grounded in public source records.</p>
+        <div class="casebook-foot-links"><span class="casebook-links-label" id="casebook-evidence-title">OPEN THE REAL EVIDENCE</span><div id="casebook-links"></div></div>
+      </div>
+    </div>
+  </dialog>
 </body>
 </html>

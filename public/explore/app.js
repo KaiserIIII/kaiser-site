@@ -81,6 +81,7 @@
     updateGraph();
     renderArchive();
     if ($("#command-dialog").open) renderCommandResults();
+    window.dispatchEvent(new CustomEvent("kaiser:language",{detail:{locale}}));
   }
   $$("[data-lang]").forEach(button => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
 
@@ -319,6 +320,7 @@
   function selectProject(id,options={}){
     if(!projectById(id))return;
     selectedId=id;
+    window.dispatchEvent(new CustomEvent("kaiser:project-selection",{detail:{id}}));
     if(!visibleProject(projectById(id)))mapFilter="all";
     updateInspector();
     updateGraph();
@@ -366,10 +368,8 @@
 
   // Loop is attached to one requestAnimationFrame, with no layout reads on each frame.
   let animationFrame=0;
-  let animationTime=0;
   function animate(time){
     if(!prefersReduced.matches&&!document.hidden){
-      animationTime=time;
       if(heroVisible&&plotPoint){
         const t=(time*.00012)%1;
         const p=cubicCoordinates([[102,185],[210,150],[395,430],[530,425]],t);
@@ -387,7 +387,18 @@
     }
     animationFrame=requestAnimationFrame(animate);
   }
-  if(!prefersReduced.matches)animationFrame=requestAnimationFrame(animate);
+  function syncAnimation(){
+    const shouldRun=!prefersReduced.matches&&!document.hidden;
+    if(!shouldRun && animationFrame){
+      cancelAnimationFrame(animationFrame);
+      animationFrame=0;
+    } else if(shouldRun && !animationFrame) {
+      animationFrame=requestAnimationFrame(animate);
+    }
+  }
+  document.addEventListener("visibilitychange",syncAnimation);
+  if(prefersReduced.addEventListener)prefersReduced.addEventListener("change",syncAnimation);
+  syncAnimation();
 
   // Archive: search is local, case-insensitive and operates on both languages.
   function projectMatch(project,query){
@@ -419,7 +430,11 @@
       const tags=element("div",{class:"archive-tech"});
       project.tech.slice(0,3).forEach(value=>tags.append(element("span",{},value)));
       const action=element("button",{type:"button","aria-label":translate("show")+": "+project.name,title:translate("show")+": "+project.name},"→");
-      action.addEventListener("click",()=>selectProject(project.id,{scroll:true}));
+      action.addEventListener("click",()=>{
+        if(window.KAISER_CASEBOOK && typeof window.KAISER_CASEBOOK.open==="function"){
+          window.KAISER_CASEBOOK.open(project.id,{opener:action});
+        }else selectProject(project.id,{scroll:true});
+      });
       row.append(index,head,desc,tags,action);
       fragment.append(row);
     });
@@ -436,7 +451,7 @@
     archiveFilter=button.dataset.archiveFilter;
     renderArchive();
   }));
-  $$("[data-open-project]").forEach(button=>button.addEventListener("click",()=>selectProject(button.dataset.openProject,{scroll:true})));
+  // Featured case buttons are handled by the source-linked casebook dialog.
 
   // Command palette: accessible native dialog, keyboard navigation and typed lookup.
   const dialog=$("#command-dialog"), commandInput=$("#command-input");
