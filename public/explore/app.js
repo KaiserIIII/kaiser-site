@@ -121,7 +121,7 @@
       $$(".desktop-nav a").forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === "#" + entry.target.id));
     });
   }, { rootMargin:"-35% 0px -50% 0px", threshold:0 }) : null;
-  if (navObserver) ["work", "connections", "about", "contact"].forEach(id => {
+  if (navObserver) ["work", "connections", "compare", "about", "contact"].forEach(id => {
     const target = $("#" + id);
     if (target) navObserver.observe(target);
   });
@@ -166,6 +166,7 @@
   const edges = [];
   const graphGroups = new Map();
   const domainGroups = new Map();
+  const mobileNodes = new Map();
 
   function graphCurve(edge) {
     const a = domainPositions.get(edge.domain.id);
@@ -225,7 +226,18 @@
       group.append(plate,number,title,pin);
       const choose=()=>selectProject(project.id,{scroll:false});
       group.addEventListener("click",event=>{if(group.dataset.dragged==="1"){group.dataset.dragged="0";return;}choose();});
-      group.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();choose();}});
+      group.addEventListener("keydown",event=>{
+        if(event.key==="Enter"||event.key===" "){event.preventDefault();choose();}
+        if(event.key==="ArrowRight"||event.key==="ArrowLeft"){
+          event.preventDefault();
+          const visible=data.projects.filter(visibleProject);
+          const current=visible.findIndex(item=>item.id===project.id);
+          const move=event.key==="ArrowRight"?1:-1;
+          const next=visible[(current+move+visible.length)%visible.length];
+          selectProject(next.id,{scroll:false});
+          graphGroups.get(next.id).group.focus();
+        }
+      });
       let gesture=null;
       group.addEventListener("pointerdown",event=>{
         if(!visibleProject(project)||event.button>0)return;
@@ -261,6 +273,7 @@
     if("IntersectionObserver" in window) {
       new IntersectionObserver(entries=>{graphVisible=entries[0].isIntersecting;},{threshold:0}).observe(graph);
     }
+    buildMobileIndex();
     updateGraph();
   }
   function updateEdges() {
@@ -273,6 +286,43 @@
       edge.path.setAttribute("stroke-opacity",visible?(selected?".83":".13"):"0");
       edge.path.setAttribute("stroke-width",selected?"2.3":"1.1");
       edge.particle.setAttribute("opacity",(visible&&selected&&!prefersReduced.matches)?"0.9":"0");
+    });
+  }
+  function buildMobileIndex(){
+    const container=$("#mobile-project-index");
+    if(!container)return;
+    const fragment=document.createDocumentFragment();
+    data.projects.forEach(project=>{
+      const domain=data.domains.find(d=>d.id===project.domains[0]);
+      const button=element("button",{
+        type:"button",class:"mobile-project-entry",
+        "aria-controls":"graph-inspector","aria-pressed":"false",
+        "aria-label":"Inspect "+project.name
+      });
+      const meta=element("span",{class:"mobile-project-entry-top"});
+      const dot=element("span",{class:"mobile-project-entry-dot","aria-hidden":"true"});
+      dot.style.background=domain?.color||"#b77559";
+      meta.append(dot,element("span",{},project.field+" / "+project.group.toUpperCase()));
+      button.append(meta,element("span",{class:"mobile-project-entry-name"},project.name));
+      button.addEventListener("click",()=>{
+        selectProject(project.id,{scroll:false});
+        if(window.matchMedia("(max-width: 660px)").matches){
+          $("#graph-inspector").scrollIntoView({
+            behavior:prefersReduced.matches?"instant":"smooth",
+            block:"start"
+          });
+        }
+      });
+      fragment.append(button);
+      mobileNodes.set(project.id,button);
+    });
+    container.replaceChildren(fragment);
+  }
+  function updateMobileIndex(){
+    mobileNodes.forEach((button,id)=>{
+      const project=projectById(id);
+      button.hidden=!visibleProject(project);
+      button.setAttribute("aria-pressed",String(id===selectedId));
     });
   }
   function updateGraph() {
@@ -297,6 +347,7 @@
       group.setAttribute("aria-pressed",String(selected));
     });
     $$("[data-map-filter]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.mapFilter===mapFilter)));
+    updateMobileIndex();
     updateEdges();
   }
   function updateInspector() {

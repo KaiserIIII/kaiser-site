@@ -20,6 +20,7 @@
   <script defer src="./blueprints.js"></script>
   <script defer src="./app.js"></script>
   <script defer src="./casebook.js"></script>
+  <script defer src="./compare.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -34,6 +35,7 @@
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#work" data-i18n="navWork">Work</a>
         <a href="#connections" data-i18n="navMap">Connections</a>
+        <a href="#compare" data-i18n="navCompare">Compare</a>
         <a href="#about" data-i18n="navAbout">About</a>
         <a href="#contact" data-i18n="navReach">Get in touch</a>
       </nav>
@@ -179,6 +181,7 @@
         <div class="graph-shell reveal">
           <div class="graph-main">
             <div class="graph-toolbar"><span class="graph-eyebrow"><span class="graph-live-dot"></span><span data-i18n="connections">Connections</span><span class="graph-version">/ 001</span></span><button type="button" class="reset-button" id="map-reset"><span aria-hidden="true">↺</span><span data-i18n="reset">Reset layout</span></button></div>
+            <div class="mobile-graph-index" id="mobile-project-index" aria-label="Project nodes"></div>
             <div class="graph-frame" id="graph-frame">
               <svg id="relationship-graph" viewBox="0 0 920 670" role="group" aria-labelledby="graph-svg-title graph-svg-desc">
                 <title id="graph-svg-title">Project relationships</title><desc id="graph-svg-desc">An interactive graph connecting four engineering disciplines with ten public projects. Select nodes or drag project cards.</desc>
@@ -218,8 +221,91 @@
       </div>
     </section>
 
+    <section class="comparison-section section-space" id="compare" aria-labelledby="compare-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="overline" data-i18n="compareKicker">03 / THE CONNECTIONS</p>
+          <h2 id="compare-title" class="serif-title" data-i18n="compareTitle">Different systems. Shared questions.</h2>
+          <p class="section-subtitle" data-i18n="compareSubtitle">Place any two projects side by side. Explore the decisions, inspect their evidence, and find connections without reducing them to scores.</p>
+        </div>
+        <div class="compare-studio reveal" id="compare-studio">
+          <div class="compare-topbar">
+            <span class="compare-studio-mark"><span aria-hidden="true">✳</span><span data-i18n="compareMode">COMPARATIVE NOTEBOOK / 001</span></span>
+            <button type="button" id="compare-share" class="compare-share" aria-describedby="compare-share-status">
+              <span data-i18n="compareCopy">Copy comparison link</span><span aria-hidden="true">↗</span>
+            </button>
+            <span id="compare-share-status" role="status" class="compare-share-status"></span>
+          </div>
+          <div class="compare-controls">
+            <label class="compare-picker">
+              <span data-i18n="compareLeftLabel">FIRST PROJECT</span>
+              <select id="compare-left" aria-label="First project"><option value="zhixu">Zhixu / 知序</option></select>
+            </label>
+            <button type="button" id="compare-swap" class="compare-swap" aria-label="Swap compared projects" title="Swap projects">⇄</button>
+            <label class="compare-picker">
+              <span data-i18n="compareRightLabel">SECOND PROJECT</span>
+              <select id="compare-right" aria-label="Second project"><option value="migrationwitness">MigrationWitness</option></select>
+            </label>
+          </div>
+          <div class="compare-preset-row" role="group" aria-label="Suggested comparisons">
+            <span data-i18n="compareTry">START SOMEWHERE</span>
+            <button type="button" data-compare-preset="zhixu,migrationwitness"><span data-i18n="comparePresetOne">Knowledge × Reliability</span></button>
+            <button type="button" data-compare-preset="cardcraft,cost"><span data-i18n="comparePresetTwo">Game × Construction</span></button>
+            <button type="button" data-compare-preset="wifiscope,importproof"><span data-i18n="comparePresetThree">Networks × Data fidelity</span></button>
+          </div>
+          <div class="compare-scene" aria-hidden="true">
+            <svg id="compare-visual" viewBox="0 0 1000 250" preserveAspectRatio="xMidYMid meet" focusable="false">
+              <defs><linearGradient id="compare-sweep" x1="0" x2="1"><stop offset="0" stop-color="#e7d2c0"/><stop offset=".5" stop-color="#e4e0d8"/><stop offset="1" stop-color="#d8e1dc"/></linearGradient></defs>
+              <rect x="9" y="9" width="982" height="232" rx="17" fill="url(#compare-sweep)" opacity=".64"/>
+              <g id="compare-paths"></g><g id="compare-nodes"></g>
+            </svg>
+            <span class="compare-scene-label" data-i18n="compareVisualCaption">A conceptual connection map · Not a performance benchmark</span>
+          </div>
+          <div class="compare-overlap" aria-live="polite">
+            <div class="compare-overlap-label">
+              <span data-i18n="compareShared">SHARED AREAS</span>
+              <span id="compare-shared-count">02 / 04</span>
+            </div>
+            <div id="compare-shared-tags" class="compare-overlap-tags"></div>
+            <p id="compare-explanation" class="compare-explanation">Two systems, two ways of investigating evidence.</p>
+          </div>
+          <div class="compare-columns" id="compare-columns">
+            <article class="compare-project" aria-labelledby="compare-left-title">
+              <div class="compare-project-index">A <span id="compare-left-field">02</span></div>
+              <h3 id="compare-left-title">Zhixu / 知序</h3>
+              <p class="compare-project-summary" id="compare-left-short">A self-hosted knowledge system.</p>
+              <div id="compare-left-tech" class="compare-tech"></div>
+              <div class="compare-division"></div>
+              <div class="compare-section-heading" data-i18n="compareFocus">THE ENGINEERING FOCUS</div>
+              <p id="compare-left-focus"></p>
+              <div class="compare-section-heading" data-i18n="compareProof">PUBLIC EVIDENCE</div>
+              <p id="compare-left-proof"></p>
+              <div class="compare-section-heading" data-i18n="compareBoundary">KNOWN BOUNDARY</div>
+              <p id="compare-left-limit"></p>
+              <div class="compare-links" id="compare-left-links"></div>
+            </article>
+            <article class="compare-project" aria-labelledby="compare-right-title">
+              <div class="compare-project-index">B <span id="compare-right-field">04</span></div>
+              <h3 id="compare-right-title">MigrationWitness</h3>
+              <p class="compare-project-summary" id="compare-right-short">Database migration contracts.</p>
+              <div id="compare-right-tech" class="compare-tech"></div>
+              <div class="compare-division"></div>
+              <div class="compare-section-heading" data-i18n="compareFocus">THE ENGINEERING FOCUS</div>
+              <p id="compare-right-focus"></p>
+              <div class="compare-section-heading" data-i18n="compareProof">PUBLIC EVIDENCE</div>
+              <p id="compare-right-proof"></p>
+              <div class="compare-section-heading" data-i18n="compareBoundary">KNOWN BOUNDARY</div>
+              <p id="compare-right-limit"></p>
+              <div class="compare-links" id="compare-right-links"></div>
+            </article>
+          </div>
+          <p class="compare-notice" data-i18n="compareNotice">Connections use four curated subject areas from the public project index. No ability score, citation count or production claim is inferred.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="archive-section section-space container" id="archive" aria-labelledby="archive-title">
-      <div class="section-heading reveal"><p class="overline" data-i18n="archiveKicker">03 / THE ARCHIVE</p><h2 class="serif-title" id="archive-title" data-i18n="archiveTitle">More than the highlights.</h2><p class="section-subtitle" data-i18n="archiveSubtitle">A compact index of projects, experiments and open questions.</p></div>
+      <div class="section-heading reveal"><p class="overline" data-i18n="archiveKicker">04 / THE ARCHIVE</p><h2 class="serif-title" id="archive-title" data-i18n="archiveTitle">More than the highlights.</h2><p class="section-subtitle" data-i18n="archiveSubtitle">A compact index of projects, experiments and open questions.</p></div>
       <div class="archive-controls reveal">
         <label class="archive-search" for="archive-query"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg><input id="archive-query" type="search" autocomplete="off" placeholder="Find a project, language, or topic" data-i18n-placeholder="searchPlaceholder"></label>
         <div class="archive-chips" role="group" aria-label="Filter archive">
@@ -239,7 +325,7 @@
         <div class="about-art reveal" aria-hidden="true">
           <div class="about-art-inner"><span>001</span><div class="about-art-type">Make.<br><em>Break.</em><br>Learn.</div><div class="about-art-seal"><span>YUE</span><small>∞</small></div><div class="about-art-bottom">UNFINISHED BY DESIGN</div></div>
         </div>
-        <div class="about-copy reveal"><p class="overline" data-i18n="aboutKicker">04 / A LITTLE ABOUT ME</p><h2 class="serif-title" id="about-title" data-i18n="aboutTitle">Between disciplines.</h2><p data-i18n="aboutA">Engineering management taught me to care about constraints, quantities and real environments. Computer science gave me new ways to turn those problems into systems.</p><p data-i18n="aboutB">I learn by shipping tools, studying failures and preserving the evidence — even when it contradicts the original idea.</p>
+        <div class="about-copy reveal"><p class="overline" data-i18n="aboutKicker">05 / A LITTLE ABOUT ME</p><h2 class="serif-title" id="about-title" data-i18n="aboutTitle">Between disciplines.</h2><p data-i18n="aboutA">Engineering management taught me to care about constraints, quantities and real environments. Computer science gave me new ways to turn those problems into systems.</p><p data-i18n="aboutB">I learn by shipping tools, studying failures and preserving the evidence — even when it contradicts the original idea.</p>
           <div class="about-attributes"><div><small data-i18n="aboutLabel1">STUDY</small><strong data-i18n="aboutVal1">Northeast Forestry University</strong></div><div><small data-i18n="aboutLabel2">FOCUS</small><strong data-i18n="aboutVal2">Systems · Data · Applied Research</strong></div></div>
         </div>
       </div>

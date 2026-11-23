@@ -8,6 +8,7 @@ describe('public portfolio atelier', () => {
   const css=readFileSync(resolve(root,'styles.css'),'utf8');
   const data=readFileSync(resolve(root,'data.js'),'utf8');
   const app=readFileSync(resolve(root,'app.js'),'utf8');
+  const comparison=readFileSync(resolve(root,'compare.js'),'utf8');
   const cases=readFileSync(resolve(root,'casebook.js'),'utf8');
   const blueprints=readFileSync(resolve(root,'blueprints.js'),'utf8');
   it('publishes a dependency-free interactive route', () => {
@@ -26,6 +27,12 @@ describe('public portfolio atelier', () => {
     expect(css).toContain('prefers-reduced-motion');
     expect(app).toContain('setPointerCapture');
     expect(app).toContain('renderCommandResults');
+    expect(html).toContain('id="compare-studio"');
+    expect(html).toContain('id="mobile-project-index"');
+    expect(html).toContain('src="./compare.js"');
+    expect(comparison).toContain('data.domains.filter');
+    expect(comparison).toContain('popstate');
+    expect(app).toContain('updateMobileIndex');
   });
   it('is personal, bilingual and publicly sourced',()=>{
     expect(data).toContain('Northeast Forestry University');
