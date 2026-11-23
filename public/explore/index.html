@@ -17,6 +17,7 @@
   <link rel="canonical" href="https://kaiseriiii.github.io/KaiserIIII/">
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./data.js"></script>
+  <script defer src="./search-engine.js"></script>
   <script defer src="./blueprints.js"></script>
   <script defer src="./app.js"></script>
   <script defer src="./casebook.js"></script>
@@ -424,10 +425,30 @@
   </main>
 
   <dialog id="command-dialog" class="command-dialog" aria-labelledby="command-title">
-    <div class="command-head"><p id="command-title" data-i18n="commandTitle">Jump to a project</p><button type="button" id="command-close" aria-label="Close search">✕</button></div>
-    <label class="command-input-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg><input id="command-input" type="search" autocomplete="off" data-i18n-placeholder="commandHint" placeholder="Type a project or a technology"></label>
+    <div class="command-head"><p id="command-title" data-i18n="commandTitle">Search projects & evidence</p><button type="button" id="command-close" aria-label="Close search">✕</button></div>
+    <label class="command-input-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg><input id="command-input" type="search" autocomplete="off" maxlength="180" aria-label="Search project evidence" data-i18n-placeholder="commandHint" placeholder="Ask about work, experiments or systems"></label>
+    <div class="command-search-context">
+      <span id="command-suggestion-title" class="command-suggestion-title">TRY A QUESTION</span>
+      <div class="command-prompts" id="command-prompts" role="group" aria-label="Suggested project searches"></div>
+    </div>
+    <div class="command-result-heading">
+      <span id="command-query-status" role="status" aria-live="polite">BROWSE PUBLIC PROJECTS</span>
+      <span id="command-record-mark" class="command-record-mark">PUBLIC RECORDS / 10</span>
+    </div>
     <div id="command-results" class="command-results" role="listbox" aria-label="Project results"></div>
-    <div class="command-foot"><span data-i18n="commandHelp">↑ ↓ Navigate · Enter Open · Esc Close</span><span>KAISER / SEARCH</span></div>
+    <aside id="command-preview" class="command-preview" aria-label="Public project evidence" hidden>
+      <div class="command-preview-topline"><strong id="command-preview-title">Zhixu / 知序</strong><span>✳ EVIDENCE NOTES</span></div>
+      <div class="command-preview-grid">
+        <div><span id="command-why-label">WHY THIS MATCHES</span><p id="command-preview-why"></p></div>
+        <div><span id="command-proof-label">PUBLIC EVIDENCE</span><p id="command-preview-proof"></p></div>
+        <div class="command-preview-limit"><span id="command-boundary-label">KNOWN BOUNDARY</span><p id="command-preview-boundary"></p></div>
+      </div>
+      <div class="command-preview-actions">
+        <button type="button" id="command-explore">Explore the system ↗</button>
+        <a id="command-evidence-link" target="_blank" rel="noopener noreferrer" href="https://github.com/KaiserIIII">Open public record ↗</a>
+      </div>
+    </aside>
+    <div class="command-foot"><span data-i18n="commandHelp">↑ ↓ Navigate · Enter Open · Esc Close</span><span id="command-method">LOCAL SEARCH / NO AI ANSWERS</span></div>
   </dialog>
   <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
   <dialog id="casebook-dialog" class="casebook-dialog" aria-labelledby="casebook-title" aria-describedby="casebook-lead">

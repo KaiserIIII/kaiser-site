@@ -504,54 +504,133 @@
   }));
   // Featured case buttons are handled by the source-linked casebook dialog.
 
-  // Command palette: accessible native dialog, keyboard navigation and typed lookup.
-  const dialog=$("#command-dialog"), commandInput=$("#command-input");
+  // Evidence Search: deterministic query relevance over curated public sources.
+  // No LLM, remote API or competence scores; evidence and limits stay visible.
+  const dialog=$("#command-dialog"),commandInput=$("#command-input");
+  const searchEngine=window.KAISER_EVIDENCE_SEARCH;
+  const evidenceCopy={
+    en:{match:"SOURCE-MATCHED WORK",browse:"BROWSE PUBLIC PROJECTS",
+      empty:"No public project evidence matched. Try a different subject or project name.",
+      found:"public projects found",method:"Local, deterministic matching · not AI-generated advice",
+      why:"WHY THIS MATCHES",proof:"RECORDED EVIDENCE",boundary:"WHAT IS NOT CLAIMED",
+      open:"Explore the system",source:"Open public record",prompts:["shipped product","database reliability","knowledge retrieval","construction costs"],
+      tip:"TRY A QUESTION",records:"PUBLIC RECORDS / 10",sourceLink:"Public source",summary:"Choose a result to read the evidence, then open the original source."},
+    zh:{match:"与公开证据相关的作品",browse:"浏览公开项目",
+      empty:"没有找到匹配的公开项目资料。可以换个主题词或输入项目名。",
+      found:"项公开项目",method:"本地确定性匹配 · 不生成未经核验的 AI 回答",
+      why:"为什么相关",proof:"公开验证依据",boundary:"不能直接据此认定",
+      open:"探索系统",source:"打开公开记录",prompts:["真正发布过的产品","数据库可靠性研究","知识检索与租户隔离","工程造价计算"],
+      tip:"试着直接提问",records:"公开项目 / 10",sourceLink:"公开来源",summary:"选择项目查看证据与局限，再打开对应的原始资料。"}
+  };
+  const eword=key=>evidenceCopy[locale][key]||evidenceCopy.en[key];
+  let commandMatches=[];
   function lookup(query){
-    const q=query.trim().toLocaleLowerCase();
-    return data.projects.filter(project=>projectMatch(project,q)).slice(0,10);
+    if(!searchEngine){
+      const q=query.trim().toLocaleLowerCase();
+      return data.projects.filter(p=>projectMatch(p,q)).slice(0,10).map(project=>({
+        project,reasons:[],evidence:projectText(project).proof,limitation:projectText(project).note
+      }));
+    }
+    return searchEngine.inspect(query,data.projects,locale,8).results;
+  }
+  function renderPrompts(){
+    const root=$("#command-prompts");root.replaceChildren();
+    $("#command-suggestion-title").textContent=eword("tip");
+    evidenceCopy[locale].prompts.forEach(query=>{
+      const b=element("button",{type:"button",class:"command-prompt"},query);
+      b.addEventListener("click",()=>{commandInput.value=query;commandSelection=0;renderCommandResults();commandInput.focus();});
+      root.append(b);
+    });
+    $("#command-method").textContent=eword("method");
+    $("#command-record-mark").textContent=eword("records");
+  }
+  function updateCommandPreview(){
+    const match=commandMatches[commandSelection];
+    const preview=$("#command-preview");
+    preview.hidden=!match;
+    if(!match)return;
+    const project=match.project;
+    $("#command-preview-title").textContent=project.name;
+    $("#command-why-label").textContent=eword("why");
+    $("#command-proof-label").textContent=eword("proof");
+    $("#command-boundary-label").textContent=eword("boundary");
+    $("#command-preview-why").textContent=match.reasons.length
+      ?match.reasons.join(" · "):projectText(project).tag;
+    $("#command-preview-proof").textContent=match.evidence||projectText(project).proof;
+    $("#command-preview-boundary").textContent=match.limitation||projectText(project).note;
+    $("#command-explore").textContent=eword("open")+" ↗";
+    const records=project.links||[];
+    const best=records.find(x=>/verification|experiment|record|cases|release|artifact|steam|method/i.test(x.title))
+      ||records.find(x=>/source/i.test(x.title))||records[0];
+    const link=$("#command-evidence-link");
+    link.hidden=!best;
+    if(best){link.href=best.url;link.textContent=eword("source")+" ↗";}
   }
   function renderCommandResults(){
-    commandHits=lookup(commandInput.value);
+    commandMatches=lookup(commandInput.value);
+    commandHits=commandMatches.map(x=>x.project);
     commandSelection=Math.min(commandSelection,Math.max(0,commandHits.length-1));
-    const root=$("#command-results");
+    const result=$("#command-results");
     const fragment=document.createDocumentFragment();
-    commandHits.forEach((project,index)=>{
-      const item=element("button",{type:"button",class:"command-result",role:"option","aria-selected":String(index===commandSelection)});
+    const hasQuery=Boolean(commandInput.value.trim());
+    const status=$("#command-query-status");
+    status.textContent=hasQuery
+      ?String(commandHits.length)+" "+eword("found")
+      :eword("browse");
+    commandMatches.forEach((match,index)=>{
+      const project=match.project;
+      const item=element("button",{type:"button",class:"command-result",role:"option",
+        "aria-selected":String(index===commandSelection),"data-project-id":project.id,
+        id:"command-result-"+project.id});
       item.append(
         element("span",{class:"command-result-number"},project.field),
         element("span",{class:"command-result-text"}),
         element("span",{class:"command-result-arrow"},"↗")
       );
       const body=$(".command-result-text",item);
-      body.append(element("strong",{},project.name),element("small",{},projectText(project).tag+" · "+project.tech.slice(0,2).join(" / ")));
+      body.append(element("strong",{},project.name),
+        element("small",{},match.reasons.length
+          ?match.reasons.join(" / "):projectText(project).tag+" · "+project.tech.slice(0,2).join(" / ")));
       item.addEventListener("mouseenter",()=>{commandSelection=index;highlightCommandSelection();});
+      item.addEventListener("focus",()=>{commandSelection=index;highlightCommandSelection();});
       item.addEventListener("click",()=>{closeCommand();selectProject(project.id,{scroll:true});});
       fragment.append(item);
     });
-    root.replaceChildren(fragment);
+    if(!commandMatches.length)fragment.append(element("p",{class:"command-empty"},eword("empty")));
+    result.replaceChildren(fragment);
+    renderPrompts();
+    updateCommandPreview();
   }
   function highlightCommandSelection(){
     $$(".command-result",$("#command-results")).forEach((item,i)=>item.setAttribute("aria-selected",String(i===commandSelection)));
+    updateCommandPreview();
   }
   function openCommand(){
     if(dialog.open)return;
     commandInput.value="";
     commandSelection=0;
     renderCommandResults();
-    dialog.showModal();
-    commandInput.focus();
+    dialog.showModal();commandInput.focus();
   }
   function closeCommand(){if(dialog.open)dialog.close();}
   $("#search-open").addEventListener("click",openCommand);
   $("#command-close").addEventListener("click",closeCommand);
+  $("#command-explore").addEventListener("click",()=>{
+    const hit=commandHits[commandSelection];
+    if(!hit)return;
+    closeCommand();selectProject(hit.id,{scroll:false});
+    if(window.KAISER_CASEBOOK?.open)window.KAISER_CASEBOOK.open(hit.id,{opener:$("#search-open")});
+    else $("#connections").scrollIntoView({behavior:"auto",block:"start"});
+  });
   commandInput.addEventListener("input",()=>{commandSelection=0;renderCommandResults();});
   commandInput.addEventListener("keydown",event=>{
     if(event.key==="ArrowDown"||event.key==="ArrowUp"){
       event.preventDefault();
       if(commandHits.length){
-        const dir=event.key==="ArrowDown"?1:-1;
-        commandSelection=(commandSelection+dir+commandHits.length)%commandHits.length;
+        commandSelection=(commandSelection+(event.key==="ArrowDown"?1:-1)+commandHits.length)%commandHits.length;
         highlightCommandSelection();
+        const item=$("#command-result-"+commandHits[commandSelection].id);
+        if(item)item.scrollIntoView({block:"nearest"});
       }
     }
     if(event.key==="Enter"){

@@ -25,3 +25,11 @@ The interactive portfolio includes three bilingual editorial reading paths that 
 The native modal starts only when visitors request it, supports previous/next, keyboard operation, step progress and reduced motion, and provides direct URLs such as `/?trail=verify&note=2`. No analytics are recorded and no private-source materials are used. The reader is documentation/navigation, not a new scientific experiment or professional credential.
 
 As with prior versions, `public/explore/` is a source-synchronized static route. **Merging this repository does not publish `kaiseriii.tech`**: the separate local-server deployment must be performed explicitly.
+
+## V10 — Grounded, explainable portfolio search
+
+Existing Cmd/Ctrl+K search has been upgraded **in place**, rather than adding a new section. The canonical local implementation is `search-engine.js` plus the original `app.js`: bilingual domain signals and keyword matching rank the ten curated public projects, while the visible evidence panel shows (a) why a record matches, (b) that project's published evidence, (c) its recorded limitations, and (d) direct public evidence links. Suggested prompts and zero-match explanations make the interaction usable to visitors unfamiliar with project names.
+
+**The engine is intentionally not an LLM**. It does not browse GitHub, fabricate claims, measure skill or assert that a private repository is public. Search rank is only query relevance. No visitor query is sent to a server or logged by this page. Project facts still depend on dated, curated public records and are not automatically verified for freshness.
+
+The canonical GitHub Pages source lives in `KaiserIIII/KaiserIIII/experience`. As before, merging this source mirror **does not deploy `kaiseriii.tech`**: the separately managed server must be rebuilt and published through the existing operations procedure.
