@@ -9,6 +9,7 @@ describe('public portfolio atelier', () => {
   const data=readFileSync(resolve(root,'data.js'),'utf8');
   const app=readFileSync(resolve(root,'app.js'),'utf8');
   const comparison=readFileSync(resolve(root,'compare.js'),'utf8');
+  const journey=readFileSync(resolve(root,'journey.js'),'utf8');
   const lab=readFileSync(resolve(root,'lab-ui.js'),'utf8');
   const labEngine=readFileSync(resolve(root,'lab-engine.js'),'utf8');
   const cases=readFileSync(resolve(root,'casebook.js'),'utf8');
@@ -41,6 +42,13 @@ describe('public portfolio atelier', () => {
     expect(labEngine).toContain('function permission(');
     expect(labEngine).toContain('function retrieval(');
     expect(comparison).toContain('popstate');
+    expect(html).toContain('id="journey-launch"');
+    expect(html).toContain('id="journey-dialog"');
+    expect(html).toContain('src="./journey.js"');
+    expect(journey).toContain('KAISER_CASEBOOK');
+    expect(journey).toContain('KAISER_LAB');
+    expect(journey).toContain('KAISER_COMPARE');
+    expect(journey).toContain('searchParams.set("trail"');
     expect(app).toContain('updateMobileIndex');
   });
   it('is personal, bilingual and publicly sourced',()=>{

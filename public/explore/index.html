@@ -23,6 +23,7 @@
   <script defer src="./compare.js"></script>
   <script defer src="./lab-engine.js"></script>
   <script defer src="./lab-ui.js"></script>
+  <script defer src="./journey.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -66,6 +67,7 @@
           <a class="button button-primary" href="#work"><span data-i18n="discover">Explore the work</span><span aria-hidden="true">↗</span></a>
           <a class="button button-quiet" href="https://github.com/KaiserIIII" target="_blank" rel="noopener noreferrer"><span data-i18n="viewGithub">Find me on GitHub</span><span aria-hidden="true">↗</span></a>
         </div>
+        <button id="journey-launch" class="journey-launch intro-reveal" type="button" aria-haspopup="dialog" aria-controls="journey-dialog"><span class="journey-launch-mark" aria-hidden="true">✳</span><span>Take a guided look / 跟着故事逛一圈</span><span aria-hidden="true">↗</span></button>
         <p class="scroll-hint intro-reveal"><span class="scroll-line" aria-hidden="true"></span><span data-i18n="scroll">SCROLL TO EXPLORE</span></p>
       </div>
       <div class="hero-art" id="hero-art" aria-hidden="true">
@@ -468,6 +470,65 @@
       <div class="casebook-foot">
         <p id="casebook-disclaimer">A conceptual illustration grounded in public source records.</p>
         <div class="casebook-foot-links"><span class="casebook-links-label" id="casebook-evidence-title">OPEN THE REAL EVIDENCE</span><div id="casebook-links"></div></div>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="journey-dialog" class="journey-dialog" aria-labelledby="journey-dialog-label">
+    <div class="journey-shell">
+      <div class="journey-topbar">
+        <div class="journey-logotype" id="journey-dialog-label">YUE YU <span aria-hidden="true">✳</span> FIELD NOTES / 个人手记</div>
+        <button type="button" id="journey-close" class="journey-close">Close ×</button>
+      </div>
+      <div id="journey-chooser" class="journey-chooser">
+        <div class="journey-chooser-intro">
+          <p class="journey-overline">INTERACTIVE READING / 001</p>
+          <h2 id="journey-chooser-label">CHOOSE A THREAD</h2>
+          <p id="journey-chooser-lead">Not sure where to begin? Follow one of three short stories through actual work and evidence.</p>
+        </div>
+        <div id="journey-choices" class="journey-choices"></div>
+        <div class="journey-chooser-bottom">
+          <span>BUILT / VERIFIED / CONNECTED</span><span aria-hidden="true">↗</span>
+        </div>
+      </div>
+      <div id="journey-reader" class="journey-reader" hidden>
+        <div class="journey-reader-top">
+          <button type="button" id="journey-all" class="journey-minimal">← All paths</button>
+          <span id="journey-path-kicker" class="journey-overline">READING PATH / 01</span>
+          <span id="journey-step-counter" class="journey-counter">01 / 03</span>
+        </div>
+        <div class="journey-track" aria-hidden="true"><span id="journey-reading-progress"></span></div>
+        <div class="journey-content">
+          <div class="journey-copy">
+            <span id="journey-category" class="journey-overline">PRODUCT / RELEASE</span>
+            <h2 id="journey-title">A game must actually ship</h2>
+            <p id="journey-body">A public project story grounded in evidence.</p>
+            <div class="journey-actions">
+              <button type="button" class="journey-action" id="journey-action">Explore the project ↗</button>
+              <button type="button" class="journey-share" id="journey-share">Copy path link ↗</button>
+            </div>
+            <p id="journey-share-status" role="status" class="journey-share-status"></p>
+          </div>
+          <aside class="journey-aside">
+            <div class="journey-aside-top">
+              <span>SELECTED WORK / AN OPEN NOTEBOOK</span><span aria-hidden="true">✳</span>
+            </div>
+            <div id="journey-motif" class="journey-motif" aria-hidden="true"></div>
+            <p id="journey-project" class="journey-project">CardCraft</p>
+            <p id="journey-context" class="journey-context">Small systems, real constraints.</p>
+            <div class="journey-evidence-block">
+              <span id="journey-evidence-label">OPEN PUBLIC EVIDENCE</span>
+              <div id="journey-evidence-links"></div>
+            </div>
+          </aside>
+        </div>
+        <div class="journey-footer">
+          <div id="journey-rail" class="journey-rail" role="group" aria-label="Reading steps"></div>
+          <div class="journey-pager">
+            <button type="button" id="journey-prev" class="journey-pager-back">← Previous</button>
+            <button type="button" id="journey-next" class="journey-pager-next">Next note →</button>
+          </div>
+        </div>
+        <p id="journey-fine-print" class="journey-disclaimer">A curated reading route, not a new experiment or a claim about private code.</p>
       </div>
     </div>
   </dialog>
