@@ -514,13 +514,13 @@
       found:"public projects found",method:"Local, deterministic matching · not AI-generated advice",
       why:"WHY THIS MATCHES",proof:"RECORDED EVIDENCE",boundary:"WHAT IS NOT CLAIMED",
       open:"Explore the system",source:"Open public record",prompts:["shipped product","database reliability","knowledge retrieval","construction costs"],
-      tip:"TRY A QUESTION",sourceLink:"Public source",summary:"Choose a result to read the evidence, then open the original source."},
+      tip:"TRY A QUESTION",records:"PUBLIC RECORDS / 10",sourceLink:"Public source",summary:"Choose a result to read the evidence, then open the original source."},
     zh:{match:"与公开证据相关的作品",browse:"浏览公开项目",
       empty:"没有找到匹配的公开项目资料。可以换个主题词或输入项目名。",
       found:"项公开项目",method:"本地确定性匹配 · 不生成未经核验的 AI 回答",
       why:"为什么相关",proof:"公开验证依据",boundary:"不能直接据此认定",
       open:"探索系统",source:"打开公开记录",prompts:["真正发布过的产品","数据库可靠性研究","知识检索与租户隔离","工程造价计算"],
-      tip:"试着直接提问",sourceLink:"公开来源",summary:"选择项目查看证据与局限，再打开对应的原始资料。"}
+      tip:"试着直接提问",records:"公开项目 / 10",sourceLink:"公开来源",summary:"选择项目查看证据与局限，再打开对应的原始资料。"}
   };
   const eword=key=>evidenceCopy[locale][key]||evidenceCopy.en[key];
   let commandMatches=[];
@@ -542,6 +542,7 @@
       root.append(b);
     });
     $("#command-method").textContent=eword("method");
+    $("#command-record-mark").textContent=eword("records");
   }
   function updateCommandPreview(){
     const match=commandMatches[commandSelection];
@@ -559,7 +560,8 @@
     $("#command-preview-boundary").textContent=match.limitation||projectText(project).note;
     $("#command-explore").textContent=eword("open")+" ↗";
     const records=project.links||[];
-    const best=records.find(x=>/verification|experiment|record|cases|release|source|artifact|steam|method/i.test(x.title))||records[0];
+    const best=records.find(x=>/verification|experiment|record|cases|release|artifact|steam|method/i.test(x.title))
+      ||records.find(x=>/source/i.test(x.title))||records[0];
     const link=$("#command-evidence-link");
     link.hidden=!best;
     if(best){link.href=best.url;link.textContent=eword("source")+" ↗";}

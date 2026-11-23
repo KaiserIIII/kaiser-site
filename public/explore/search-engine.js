@@ -78,7 +78,8 @@
         reasons.push(...matched.slice(0,2).map(c=>c.labels[locale]));
       }
       const q=normalize(raw);
-      if(q===normalize(project.name)||q===normalize(project.id)){
+      const exactProjectMatch=q===normalize(project.name)||q===normalize(project.id);
+      if(exactProjectMatch){
         score+=85;
         reasons.unshift(locale==="zh"?"项目名称匹配":"Exact project match");
       }
@@ -93,11 +94,18 @@
       if(chinese(q)&&q.length>1&&fields.some(f=>normalize(f.value).includes(q)))score+=9;
       if(score>0&&!reasons.length)reasons.push(locale==="zh"?"公开项目资料中的关键词":"Keyword in public project record");
       return {project,score,reasons:reasons.slice(0,3),kind:matched.length?"concept":"keyword",
+        conceptCount:matched.length,exactProjectMatch,
         evidence:translated.proof||"",limitation:translated.note||""};
-    }).filter(r=>r.score>0).sort((a,b)=>b.score-a.score||String(a.project.field).localeCompare(String(b.project.field)))
-      .slice(0,Math.max(1,Math.min(10,Number(maxResults)||6)));
+    });
+    // For multi-topic queries, require evidence for multiple subjects when any record
+    // has such overlap. Exact named-project requests always remain retrievable.
+    // This avoids returning every "tested" project to "database reliability".
+    const multiTopic=matches.length>=2&&results.some(r=>r.conceptCount>=2);
+    const filtered=results.filter(r=>r.score>0&&(!multiTopic||r.conceptCount>=2||r.exactProjectMatch));
+    filtered.sort((a,b)=>b.score-a.score||String(a.project.field).localeCompare(String(b.project.field)));
+    const ranked=filtered.slice(0,Math.max(1,Math.min(10,Number(maxResults)||6)));
     return {query:raw,locale,mode:matches.length?"conceptual":"lexical",
-      concepts:matches.map(c=>c.labels[locale]),tokens,results};
+      concepts:matches.map(c=>c.labels[locale]),tokens,results:ranked};
   }
   return Object.freeze({inspect,normalize,tokenList,conceptDefinitions:concepts});
 });

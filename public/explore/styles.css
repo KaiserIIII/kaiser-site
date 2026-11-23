@@ -835,3 +835,6 @@ body:not(.js) .journey-launch{display:none}
 @media(prefers-reduced-motion:reduce){
  .command-prompt,.command-result{transition:none}
 }
+
+/* V10 touch QA: footer columns wrap instead of squeezing clipped text. */
+@media(max-width:660px){.command-foot{flex-wrap:wrap;align-items:flex-start;gap:5px 14px}.command-foot>span:last-child{white-space:normal;overflow-wrap:anywhere}}
