@@ -554,3 +554,116 @@ body.js .reveal.is-visible{opacity:1;transform:none}
   .graph-bottom span:first-child{display:none}
 }
 @media(prefers-reduced-motion:reduce){.compare-swap:hover{transform:none}}
+
+
+/* V8 — Reliability Lab / hands-on miniature experiments in a warm print-like workbench. */
+.lab-section{background:#eee9e0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.lab-workbench{border:1px solid #d1c5b6;border-radius:16px;background:#fbf8f3;overflow:hidden;box-shadow:0 30px 67px #4b392809}
+.lab-topline{min-height:66px;padding:0 29px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #d9cec1}
+.lab-mark{display:flex;align-items:center;gap:12px;font:700 11px var(--mono);letter-spacing:1px;color:#635549}
+.lab-mark:first-letter{color:var(--terra)}.lab-mark>span{color:#65574b}
+.lab-local-only{display:flex;gap:8px;align-items:center;font:700 10px var(--mono);letter-spacing:.55px;color:#516458}
+.lab-local-only>span:first-child{color:#688773;font-size:12px}
+.lab-tablist{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #d6c9b8}
+.lab-tablist button{background:#f8f3ec;color:#665a4f;border:0;border-bottom:3px solid transparent;padding:20px 25px;display:flex;align-items:center;text-align:left;gap:14px;font:600 19px var(--serif);min-height:78px}
+.lab-tablist button+button{border-left:1px solid #d6c9b8}
+.lab-tablist button:hover{background:#eee5da}
+.lab-tablist button[aria-selected=true]{background:#fffdfa;border-bottom-color:#a9674e;color:#40352c}
+.lab-tablist button>span:last-child{font:19px var(--sans);margin-left:auto;color:#8c5743}
+.lab-tab-index{font:700 11px var(--mono);color:#92634d;letter-spacing:.4px}
+.lab-body{display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);align-items:stretch}
+.lab-control-column{padding:38px 35px 31px;background:#fffdfa;border-right:1px solid #d6c9b8;display:flex;flex-direction:column;min-width:0}
+.lab-panel[hidden]{display:none}
+.lab-panel-intro{margin-bottom:29px}
+.lab-experiment-number{font:720 10px var(--mono);letter-spacing:1px;color:#95543b}
+.lab-panel-intro h3{font:500 clamp(29px,3vw,42px)/1.1 var(--serif);letter-spacing:-1.2px;margin:15px 0 13px;max-width:475px}
+.lab-panel-intro p{color:#655a50;font-size:14px;line-height:1.75;max-width:460px;margin:0}
+.lab-form{display:flex;flex-direction:column;gap:20px}
+.lab-field{display:flex;flex-direction:column;gap:9px;min-width:0}
+.lab-field>span,.lab-meter-head,.lab-output-kicker,.lab-note small{font:730 10px var(--mono);letter-spacing:.85px;color:#6b574a}
+.lab-field select,.lab-field input[type=text]{font:600 14px var(--sans);color:var(--ink);border:1px solid #cdbfb1;min-height:49px;border-radius:8px;padding:10px 15px;background:#fcfaf6;width:100%;max-width:100%;outline:none}
+.lab-field select:focus-visible,.lab-field input[type=text]:focus-visible{outline:3px solid #b77559;outline-offset:2px}
+.lab-field select{cursor:pointer}
+.lab-checkbox{display:flex;align-items:start;gap:12px;padding:15px 16px;background:#f5eee5;border:1px solid #e1d4c5;border-radius:8px;color:#4e443b;font-size:13px;font-weight:650;line-height:1.5}
+.lab-checkbox input{width:18px;height:18px;flex:0 0 18px;accent-color:#986246;cursor:pointer;margin:1px 0 0}
+.lab-checkbox.is-disabled{opacity:.55}
+.lab-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:7px}
+.lab-run{min-height:51px;min-width:175px;border:1px solid var(--ink);background:var(--ink);border-radius:8px;color:#fffdfa;font-size:13px;font-weight:750;padding:11px 16px;display:flex;justify-content:space-between;align-items:center;gap:28px}
+.lab-run:hover{background:#5a4c40}
+.lab-reset{border:0;border-bottom:1px solid #ab7b63;background:transparent;padding:9px 0;color:#7d4f3c;font-size:12px;font-weight:720}
+.lab-reset:hover{color:var(--ink)}
+.lab-note{display:flex;gap:13px;align-items:flex-start;border-top:1px solid var(--line);margin-top:auto;padding-top:24px}
+.lab-note-symbol{font:27px/.9 var(--serif);color:#af856e}
+.lab-note p{font-size:11px;line-height:1.7;color:#6d5e50;margin:0}
+.lab-output-column{display:flex;flex-direction:column;min-width:0;background:#f8f5ef}
+.lab-results-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 26px;border-bottom:1px solid var(--line)}
+.lab-scenario-id{font:730 11px var(--mono);color:#78695d}
+.lab-verdict{display:flex;gap:18px;align-items:center;padding:24px 26px;border-bottom:1px solid #d7c9ba;background:#eaf0e8}
+.lab-verdict[data-status=fail]{background:#f4e7e1}
+.lab-verdict-icon{width:47px;height:47px;border-radius:50%;display:grid;place-items:center;flex:0 0 47px;background:#426b4e;color:#fff;font:32px var(--serif)}
+.lab-verdict[data-status=fail] .lab-verdict-icon{background:#955741}
+.lab-verdict>div:last-child{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lab-verdict-overline{font:700 10px var(--mono);letter-spacing:.65px;color:#526457}
+.lab-verdict strong{font:600 23px/1.2 var(--serif);color:#2f4835}
+.lab-verdict[data-status=fail] strong{color:#773d2c}
+.lab-verdict small{font-size:12px;color:#475849;line-height:1.6}
+.lab-verdict[data-status=fail] small{color:#6d4539}
+.lab-results-inner{padding:27px 26px;flex:1}
+.lab-meter-head{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#64564a}
+.lab-meter-head span:last-child{color:#8d5b46}
+.lab-checks{margin-top:12px;border-top:1px solid var(--line)}
+.lab-check-row{border-bottom:1px solid var(--line);min-height:47px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px 2px}
+.lab-check-name{font:650 13px/1.4 var(--mono);color:#423b34;overflow-wrap:anywhere}
+.lab-check-name small{display:block;margin-top:4px;font:550 10px var(--mono);color:#6f6055}
+.lab-check-status{font:770 10px var(--mono);letter-spacing:.5px;color:#446e4d;white-space:nowrap}
+.lab-check-status[data-good=false]{color:#974632}
+.lab-no-matches{font-size:12px;color:#675a4d;line-height:1.6}
+.lab-trace-head{margin-top:28px}
+.lab-trace{list-style:none;padding:0;margin:15px 0 0;border-top:1px solid var(--line)}
+.lab-trace li{padding:11px 2px;display:flex;gap:16px;border-bottom:1px solid var(--line)}
+.lab-trace-number{font:700 11px var(--mono);color:#9f6d52}
+.lab-trace-content{display:flex;flex-direction:column;gap:4px}
+.lab-trace-content small{color:#745c4e;font:750 9px var(--mono);letter-spacing:.9px}
+.lab-trace-content>span{font-size:12px;line-height:1.6;color:#594f45}
+.lab-evidence-footer{display:flex;align-items:end;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:17px 26px 20px}
+.lab-evidence-footer>div{display:flex;flex-direction:column;gap:9px}
+.lab-evidence-footer>div>span{font:730 10px var(--mono);letter-spacing:.7px;color:#635344}
+.lab-evidence-footer a{font-size:12px;font-weight:750;color:#8b4833;text-decoration:none;border-bottom:1px solid #b58c73;align-self:start}
+.lab-copy{border:1px solid #cdbbac;border-radius:7px;background:#fffdfa;color:#6e4d3e;padding:9px 11px;font-size:11px;font-weight:750;white-space:nowrap}
+.lab-copy:hover{background:#efe4d9}
+.lab-copy-status{min-height:17px;margin:0 26px 17px;font:600 11px var(--sans);color:#47644d}
+@media(max-width:1150px){.desktop-nav{gap:17px}}
+@media(max-width:940px){
+ .lab-body{grid-template-columns:1fr}
+ .lab-control-column{border-right:0;border-bottom:1px solid var(--line);padding:29px}
+ .lab-note{margin-top:24px}
+ .lab-results-inner{padding:24px}
+ .lab-evidence-footer{padding:18px 24px}
+ .lab-tablist button{padding:17px 22px}
+}
+@media(max-width:660px){
+ .lab-workbench{border-radius:12px}
+ .lab-topline{padding:0 15px;min-height:57px;gap:8px}
+ .lab-mark{font-size:9px;letter-spacing:.2px;gap:6px}
+ .lab-local-only{font-size:8px;gap:4px;letter-spacing:0}
+ .lab-tablist button{min-height:65px;padding:14px 11px;gap:9px;font-size:15px}
+ .lab-tablist button>span:last-child{font-size:14px}
+ .lab-tab-index{font-size:9px}
+ .lab-control-column{padding:24px 17px 20px}
+ .lab-panel-intro h3{font-size:32px}
+ .lab-panel-intro p{font-size:13px}
+ .lab-form{gap:16px}
+ .lab-field select,.lab-field input[type=text]{font-size:13px}
+ .lab-run{min-width:164px}
+ .lab-results-header{padding:16px}
+ .lab-output-kicker,.lab-scenario-id{font-size:9px}
+ .lab-verdict{padding:18px 16px;gap:12px}
+ .lab-verdict-icon{width:40px;height:40px;flex-basis:40px;font-size:28px}
+ .lab-verdict strong{font-size:21px}
+ .lab-results-inner{padding:22px 16px}
+ .lab-evidence-footer{padding:16px;align-items:start;flex-direction:column}
+ .lab-copy-status{margin-inline:16px}
+}
+
+/* V8 contrast audit: sequential log numbers must remain legible. */
+.lab-trace-number{color:#77513b}

@@ -21,6 +21,8 @@
   <script defer src="./app.js"></script>
   <script defer src="./casebook.js"></script>
   <script defer src="./compare.js"></script>
+  <script defer src="./lab-engine.js"></script>
+  <script defer src="./lab-ui.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -34,6 +36,7 @@
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#work" data-i18n="navWork">Work</a>
+        <a href="#lab" data-i18n="navLab">Lab</a>
         <a href="#connections" data-i18n="navMap">Connections</a>
         <a href="#compare" data-i18n="navCompare">Compare</a>
         <a href="#about" data-i18n="navAbout">About</a>
@@ -175,9 +178,85 @@
       </div>
     </section>
 
+
+    <section class="lab-section section-space" id="lab" aria-labelledby="lab-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="overline" data-i18n="labKicker">02 / AN EXPERIMENT YOU CAN RUN</p>
+          <h2 id="lab-title" class="serif-title" data-i18n="labTitle">Don't just read the evidence. Test an idea.</h2>
+          <p class="section-subtitle" data-i18n="labSubtitle">Two small, deterministic models of engineering failure modes. Change the inputs, run a check, and inspect the output — right here.</p>
+        </div>
+        <div class="lab-workbench reveal" id="lab-workbench">
+          <div class="lab-topline">
+            <span class="lab-mark">✳ <span data-i18n="labBrand">THE RELIABILITY LAB / 001</span></span>
+            <span class="lab-local-only"><span aria-hidden="true">●</span><span data-i18n="labLocal">LOCAL BROWSER MODEL · NO SERVER</span></span>
+          </div>
+          <div class="lab-tablist" role="tablist" aria-label="Choose engineering experiment">
+            <button type="button" role="tab" id="lab-tab-permission" aria-controls="lab-panel-permission" aria-selected="true" tabindex="0" data-lab="permission"><span class="lab-tab-index">01</span><span data-i18n="labTabPermission">Migration contract</span><span aria-hidden="true">↗</span></button>
+            <button type="button" role="tab" id="lab-tab-retrieval" aria-controls="lab-panel-retrieval" aria-selected="false" tabindex="-1" data-lab="retrieval"><span class="lab-tab-index">02</span><span data-i18n="labTabRetrieval">Tenant boundary</span><span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="lab-body">
+            <div class="lab-control-column">
+              <div class="lab-panel" id="lab-panel-permission" role="tabpanel" aria-labelledby="lab-tab-permission">
+                <div class="lab-panel-intro">
+                  <span class="lab-experiment-number">01 / MIGRATIONWITNESS</span>
+                  <h3 data-i18n="labPermissionTitle">Can a migration pass while access fails?</h3>
+                  <p data-i18n="labPermissionIntro">Start with explicit permissions, alter the migration path, and compare the result against an independent contract.</p>
+                </div>
+                <form id="lab-form-permission" class="lab-form">
+                  <label class="lab-field"><span data-i18n="labRole">APPLICATION ROLE</span><select id="lab-role" name="role"><option value="app_writer">app_writer · SELECT / INSERT / UPDATE</option><option value="app_reader">app_reader · SELECT</option></select></label>
+                  <label class="lab-field"><span data-i18n="labStrategy">MIGRATION MECHANISM</span><select id="lab-strategy" name="strategy"><option value="native" data-i18n="labNative">Native ALTER · preserve original table</option><option value="swap" data-i18n="labSwap">Toy shadow-table swap · replace table</option></select></label>
+                  <label class="lab-checkbox" for="lab-reapply"><input id="lab-reapply" type="checkbox"><span data-i18n="labReapply">Reapply explicit grants after the swap</span></label>
+                  <div class="lab-actions"><button class="lab-run" type="submit"><span data-i18n="labRun">Run the check</span> <span aria-hidden="true">↗</span></button><button class="lab-reset" type="button" id="lab-reset-permission"><span data-i18n="labReset">Reset</span> ↺</button></div>
+                </form>
+              </div>
+              <div class="lab-panel" id="lab-panel-retrieval" role="tabpanel" aria-labelledby="lab-tab-retrieval" hidden>
+                <div class="lab-panel-intro">
+                  <span class="lab-experiment-number">02 / ZHIXU</span>
+                  <h3 data-i18n="labRetrievalTitle">Who gets to retrieve the evidence?</h3>
+                  <p data-i18n="labRetrievalIntro">Try a tiny six-document corpus with two synthetic tenants. See how access checks change a lexical search.</p>
+                </div>
+                <form id="lab-form-retrieval" class="lab-form">
+                  <label class="lab-field"><span data-i18n="labTenant">ACTIVE ORGANIZATION</span><select id="lab-tenant" name="tenant"><option value="alpha">Alpha · sample organization</option><option value="beta">Beta · sample organization</option></select></label>
+                  <label class="lab-field"><span data-i18n="labQuery">SEARCH QUERY · EDITABLE</span><input id="lab-query" name="query" type="text" autocomplete="off" maxlength="90" value="release version roadmap" placeholder="release version roadmap"></label>
+                  <label class="lab-checkbox" for="lab-scoped"><input id="lab-scoped" type="checkbox" checked><span data-i18n="labScoped">Enforce tenant scope before ranking</span></label>
+                  <div class="lab-actions"><button class="lab-run" type="submit"><span data-i18n="labRun">Run the check</span> <span aria-hidden="true">↗</span></button><button class="lab-reset" type="button" id="lab-reset-retrieval"><span data-i18n="labReset">Reset</span> ↺</button></div>
+                </form>
+              </div>
+              <div class="lab-note">
+                <span class="lab-note-symbol" aria-hidden="true">✳</span>
+                <p data-i18n="labBoundary">These are intentionally simplified teaching models, not live PostgreSQL, pg-osc, Chroma or production RAG executions. Every document is synthetic.</p>
+              </div>
+            </div>
+            <div class="lab-output-column" id="lab-results">
+              <div class="lab-results-header">
+                <span class="lab-output-kicker" data-i18n="labOutputTitle">INDEPENDENT VERIFICATION</span>
+                <span class="lab-scenario-id" id="lab-scenario-id">SCENARIO / 001</span>
+              </div>
+              <div class="lab-verdict" id="lab-verdict" data-status="pass" role="status" aria-live="polite">
+                <div class="lab-verdict-icon" aria-hidden="true">✓</div>
+                <div><span class="lab-verdict-overline" data-i18n="labObserved">OBSERVED IN MODEL</span><strong id="lab-verdict-label">CONTRACT PRESERVED</strong><small id="lab-verdict-desc">The expected privileges are present.</small></div>
+              </div>
+              <div class="lab-results-inner">
+                <div class="lab-meter-head"><span data-i18n="labInvariants">INVARIANTS &amp; OBSERVATIONS</span><span id="lab-check-counter">03 / 03</span></div>
+                <div id="lab-checks" class="lab-checks" aria-label="Independent checks"></div>
+                <div class="lab-meter-head lab-trace-head"><span data-i18n="labTrace">REPLAYABLE EXECUTION TRACE</span><span>01—04</span></div>
+                <ol id="lab-trace" class="lab-trace"></ol>
+              </div>
+              <div class="lab-evidence-footer">
+                <div><span data-i18n="labEvidence">BASED ON PUBLIC ENGINEERING WORK</span><a id="lab-evidence-link" href="https://github.com/KaiserIIII/migrationwitness/blob/main/PG_OSC_197_RESULTS.md" target="_blank" rel="noopener noreferrer">MigrationWitness · real experiment ↗</a></div>
+                <button type="button" id="lab-copy" class="lab-copy"><span data-i18n="labCopy">Copy scenario record</span> <span aria-hidden="true">↗</span></button>
+              </div>
+              <p id="lab-copy-status" class="lab-copy-status" role="status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="map-section section-space" id="connections" aria-labelledby="map-title">
       <div class="container">
-        <div class="section-heading reveal"><p class="overline" data-i18n="mapKicker">02 / AN EXPERIMENT</p><h2 id="map-title" class="serif-title" data-i18n="mapTitle">Follow the connections.</h2><p class="section-subtitle" data-i18n="mapSubtitle">Drag a project, change the lens, or select a node. Different fields often share the same engineering questions.</p></div>
+        <div class="section-heading reveal"><p class="overline" data-i18n="mapKicker">03 / AN EXPERIMENT</p><h2 id="map-title" class="serif-title" data-i18n="mapTitle">Follow the connections.</h2><p class="section-subtitle" data-i18n="mapSubtitle">Drag a project, change the lens, or select a node. Different fields often share the same engineering questions.</p></div>
         <div class="graph-shell reveal">
           <div class="graph-main">
             <div class="graph-toolbar"><span class="graph-eyebrow"><span class="graph-live-dot"></span><span data-i18n="connections">Connections</span><span class="graph-version">/ 001</span></span><button type="button" class="reset-button" id="map-reset"><span aria-hidden="true">↺</span><span data-i18n="reset">Reset layout</span></button></div>
@@ -224,7 +303,7 @@
     <section class="comparison-section section-space" id="compare" aria-labelledby="compare-title">
       <div class="container">
         <div class="section-heading reveal">
-          <p class="overline" data-i18n="compareKicker">03 / THE CONNECTIONS</p>
+          <p class="overline" data-i18n="compareKicker">04 / THE CONNECTIONS</p>
           <h2 id="compare-title" class="serif-title" data-i18n="compareTitle">Different systems. Shared questions.</h2>
           <p class="section-subtitle" data-i18n="compareSubtitle">Place any two projects side by side. Explore the decisions, inspect their evidence, and find connections without reducing them to scores.</p>
         </div>
@@ -305,7 +384,7 @@
     </section>
 
     <section class="archive-section section-space container" id="archive" aria-labelledby="archive-title">
-      <div class="section-heading reveal"><p class="overline" data-i18n="archiveKicker">04 / THE ARCHIVE</p><h2 class="serif-title" id="archive-title" data-i18n="archiveTitle">More than the highlights.</h2><p class="section-subtitle" data-i18n="archiveSubtitle">A compact index of projects, experiments and open questions.</p></div>
+      <div class="section-heading reveal"><p class="overline" data-i18n="archiveKicker">05 / THE ARCHIVE</p><h2 class="serif-title" id="archive-title" data-i18n="archiveTitle">More than the highlights.</h2><p class="section-subtitle" data-i18n="archiveSubtitle">A compact index of projects, experiments and open questions.</p></div>
       <div class="archive-controls reveal">
         <label class="archive-search" for="archive-query"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16.2 16.2 4 4"/></svg><input id="archive-query" type="search" autocomplete="off" placeholder="Find a project, language, or topic" data-i18n-placeholder="searchPlaceholder"></label>
         <div class="archive-chips" role="group" aria-label="Filter archive">
@@ -325,7 +404,7 @@
         <div class="about-art reveal" aria-hidden="true">
           <div class="about-art-inner"><span>001</span><div class="about-art-type">Make.<br><em>Break.</em><br>Learn.</div><div class="about-art-seal"><span>YUE</span><small>∞</small></div><div class="about-art-bottom">UNFINISHED BY DESIGN</div></div>
         </div>
-        <div class="about-copy reveal"><p class="overline" data-i18n="aboutKicker">05 / A LITTLE ABOUT ME</p><h2 class="serif-title" id="about-title" data-i18n="aboutTitle">Between disciplines.</h2><p data-i18n="aboutA">Engineering management taught me to care about constraints, quantities and real environments. Computer science gave me new ways to turn those problems into systems.</p><p data-i18n="aboutB">I learn by shipping tools, studying failures and preserving the evidence — even when it contradicts the original idea.</p>
+        <div class="about-copy reveal"><p class="overline" data-i18n="aboutKicker">06 / A LITTLE ABOUT ME</p><h2 class="serif-title" id="about-title" data-i18n="aboutTitle">Between disciplines.</h2><p data-i18n="aboutA">Engineering management taught me to care about constraints, quantities and real environments. Computer science gave me new ways to turn those problems into systems.</p><p data-i18n="aboutB">I learn by shipping tools, studying failures and preserving the evidence — even when it contradicts the original idea.</p>
           <div class="about-attributes"><div><small data-i18n="aboutLabel1">STUDY</small><strong data-i18n="aboutVal1">Northeast Forestry University</strong></div><div><small data-i18n="aboutLabel2">FOCUS</small><strong data-i18n="aboutVal2">Systems · Data · Applied Research</strong></div></div>
         </div>
       </div>
