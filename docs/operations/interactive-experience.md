@@ -17,3 +17,11 @@ The diagrams are conceptual explanations linked to public evidence, not captured
 The `/explore/#lab` section adds two deterministic synthetic experiments: (1) role grant preservation in a **toy** native-ALTER vs table-replacement model, and (2) tenant filtering before lexical search over **six invented documents**. Its `lab-engine.js` is pure JavaScript and `lab-ui.js` provides bilingual forms, trace output, source links and scenario JSON copying. The models are **not** real PostgreSQL, pg-osc, vector RAG or an LLM execution; the page links separately to [MigrationWitness](https://github.com/KaiserIIII/migrationwitness) and [Zhixu](https://github.com/KaiserIIII/zhixu) for genuine source and validation.
 
 Static assets are synchronized from `KaiserIIII/KaiserIIII/experience/`. `kaiseriii.tech` is published separately on an independently managed local server and will not change until that server is rebuilt and published.
+
+## V9 — Guided Field Notes / opt-in reader
+
+The interactive portfolio includes three bilingual editorial reading paths that let new visitors follow **real public project evidence** rather than only browsing a large index: *Make it real*, *Follow the failure* and *Connect the disciplines*. Each step can open the existing casebook, toy-model reliability lab or comparison notebook, and evidence links are sourced from the same curated ten public repositories.
+
+The native modal starts only when visitors request it, supports previous/next, keyboard operation, step progress and reduced motion, and provides direct URLs such as `/?trail=verify&note=2`. No analytics are recorded and no private-source materials are used. The reader is documentation/navigation, not a new scientific experiment or professional credential.
+
+As with prior versions, `public/explore/` is a source-synchronized static route. **Merging this repository does not publish `kaiseriii.tech`**: the separate local-server deployment must be performed explicitly.
