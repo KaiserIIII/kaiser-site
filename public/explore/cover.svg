@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Yue Yu personal portfolio, warm editorial typography with generative engineering lines">
+<defs><linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f7f4ed"/><stop offset="1" stop-color="#eae0d4"/></linearGradient><radialGradient id="warm"><stop stop-color="#dfbca5" stop-opacity=".55"/><stop offset="1" stop-color="#dfbca5" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="630" rx="20" fill="url(#paper)"/><rect x="36" y="36" width="1128" height="558" rx="13" fill="none" stroke="#d5cabe"/>
+<text x="84" y="99" font-family="Arial,sans-serif" font-size="16" letter-spacing="3" font-weight="700" fill="#b77559">YUE YU  /  于越  /  ENGINEERING NOTEBOOK</text>
+<text x="84" y="235" font-family="Georgia,Times New Roman,serif" font-size="83" fill="#302d29">I like making things.</text>
+<text x="84" y="333" font-family="Georgia,Times New Roman,serif" font-size="78" font-style="italic" fill="#b77559">And understanding them.</text>
+<path d="M84 380H703" stroke="#cdbfae" stroke-width="2"/>
+<text x="84" y="431" font-family="Arial,sans-serif" font-size="24" fill="#675e55">Software  /  Games  /  Engineering  /  Experiments</text>
+<text x="85" y="540" font-family="Arial,sans-serif" font-size="16" fill="#88796c">Northeast Forestry University · Engineering Management × Computer Science</text>
+<circle cx="1020" cy="308" r="239" fill="url(#warm)"/>
+<g fill="none" stroke="#b6a89a" stroke-width="1.5" opacity=".7"><circle cx="1018" cy="310" r="200"/><circle cx="1018" cy="310" r="157"/><circle cx="1018" cy="310" r="112"/><ellipse cx="1018" cy="310" rx="216" ry="90" transform="rotate(-32 1018 310)"/></g>
+<circle cx="1018" cy="310" r="63" fill="#ead5c3" stroke="#d4b5a3"/>
+<path d="M833 205C907 162 1117 398 1180 350" stroke="#b77559" stroke-width="3" fill="none"/>
+<path d="M854 418C974 470 1060 156 1160 203" stroke="#708aa2" stroke-width="2.5" fill="none"/>
+<text x="1018" y="326" font-family="Georgia,Times New Roman,serif" font-style="italic" text-anchor="middle" font-size="59" fill="#715144">Y.</text>
+<circle cx="833" cy="205" r="7" fill="#b77559"/><circle cx="854" cy="418" r="6" fill="#708aa2"/>
+</svg>
